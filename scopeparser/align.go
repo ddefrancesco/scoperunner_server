@@ -28,38 +28,12 @@ func NewAlignment(m AlignMode) *Alignment {
 	return alignment
 }
 
-func (a *Alignment) SetMode() AlignMode {
-	switch string(a.mode) {
-	case "altaz":
-		return AltAz
-	case "polar":
-		return Polar
-	case "land":
-		return Land
-	default:
-		return "error"
-	}
-}
-
 func initItems() map[AlignMode]AlignCommandValue {
 	items := make(map[AlignMode]AlignCommandValue)
 	items[AltAz] = AltAzCmd
 	items[Polar] = PolarCmd
 	items[Land] = LandCmd
 	return items
-}
-
-func (p *Alignment) Parse() (AlignCommandValue, error) {
-	switch p.mode {
-	case AltAz:
-		return AltAzCmd, nil
-	case Polar:
-		return AltAzCmd, nil
-	case Land:
-		return AltAzCmd, nil
-	default:
-		return "error", fmt.Errorf("unknown alignment")
-	}
 }
 
 func (p *Alignment) ParseMap() (AlignCommandValue, error) {
