@@ -1,30 +1,23 @@
-# syntax=docker/dockerfile:1
+FROM alpine:3.8.4 as root-certs
+RUN apk add -U --no-cache ca-certificates 
+RUN addgroup -g 1001 app
+RUN adduser app -u 1001 -D -G app /home/apple
 
-# Build the application from source
-FROM golang:1.21 AS build-stage
-
-WORKDIR /app
-
-COPY go.mod go.sum ./
+FROM golang:1.21 as builders
+WORKDIR /scoperunner-wkdir
+COPY --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
+COPY . .
 RUN go mod download
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o ./scoperunner-server ./app/./...
 
-COPY *.go ./
+FROM scratch as final
+COPY --from=root-certs  /etc/passwd /etc/passwd
+COPY --from=root-certs  /etc/group /etc/group
+COPY --chown=1001:1001 --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
+COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/scoperunner-server /scoperunner-server
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /scoperunner-server
+EXPOSE 8000
 
-# Run the tests in the container
-FROM build-stage AS run-test-stage
-RUN go test -v ./...
+USER app
 
-# Deploy the application binary into a lean image
-FROM gcr.io/distroless/base-debian11 AS build-release-stage
-
-WORKDIR /
-
-COPY --from=build-stage /scoperunner-server /scoperunner-server
-
-EXPOSE 8080
-
-USER nonroot:nonroot
-
-ENTRYPOINT ["/scoperunner-server"]
+ENTRYPOINT [ "/scoperunner-server" ]

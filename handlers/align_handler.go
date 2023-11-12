@@ -51,7 +51,7 @@ func AlignCommandHandler(w http.ResponseWriter, r *http.Request) {
 	command_string := alignCmd.ParseCommand()
 
 	etx := etxclient.NewClient()
-	scopeResp := etx.ExecReturnNothig(command_string)
+	scopeResp := etx.ExecReturnNothing(command_string)
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")
 	}

@@ -36,7 +36,7 @@ func (ec *EtxClient) Disconnect(port serial.Port) error {
 	return err
 }
 
-func (ec *EtxClient) ExecReturnNothig(scopecmd string) ScopeResponse {
+func (ec *EtxClient) ExecReturnNothing(scopecmd string) ScopeResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
