@@ -3,7 +3,7 @@ RUN apk add -U --no-cache ca-certificates
 RUN addgroup -g 1001 app
 RUN adduser app -u 1001 -D -G app /home/apple
 
-FROM golang:1.21 as builders
+FROM golang:1.21 as builder
 WORKDIR /scoperunner-wkdir
 COPY --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
 COPY . .
