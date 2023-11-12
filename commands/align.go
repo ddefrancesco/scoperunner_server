@@ -4,11 +4,7 @@ import (
 	"github.com/ddefrancesco/scoperunner_server/scopeparser"
 )
 
-type ScopeCommand interface {
-	ParseCommand() string
-}
-
-func NewCommand(com scopeparser.AlignCommandValue) *AlignCommand {
+func NewAlignCommand(com scopeparser.AlignCommandValue) *AlignCommand {
 	command := &AlignCommand{
 		cmd: com,
 	}
