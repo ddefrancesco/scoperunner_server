@@ -8,7 +8,7 @@ WORKDIR /scoperunner-wkdir
 COPY --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
 COPY . .
 RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o ./scoperunner-server ./scoperunner-wkdir/./...
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o ./scoperunner-server 
 
 FROM scratch as final
 COPY --from=root-certs  /etc/passwd /etc/passwd
