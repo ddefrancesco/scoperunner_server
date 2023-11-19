@@ -9,6 +9,7 @@ import (
 type ScopeResponse struct {
 	Err      *serial.PortError
 	Response []byte
+	ExecCmd  string
 }
 
 func NewClient() *EtxClient {
@@ -40,10 +41,11 @@ func (ec *EtxClient) ExecReturnNothing(scopecmd string) ScopeResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
-	log.Println("ExecCommand::ExecReturnNothig -> " + scopecmd + " eseguito")
+	log.Println("ExecCommand::ExecReturnNothing -> " + scopecmd + " eseguito")
 	return ScopeResponse{
 		Err:      nil,
 		Response: nil,
+		ExecCmd:  scopecmd,
 	}
 }
 
