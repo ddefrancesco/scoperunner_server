@@ -14,14 +14,22 @@ import (
 )
 
 type scope_response struct {
-	Code        int    `json:"code"`
-	Description string `json:"description"`
+	Code     int    `json:"code"`
+	Response string `json:"response"`
+	Cmd      string `json:"cmd"`
+}
+
+type scope_err struct {
+	Err            int    `json:"error_code"`
+	ErrDescription string `json:"error_description"`
+	ScopeFunction  string `json:"scope_function"`
+	Cmd            string `json:"cmd"`
 }
 
 func sendResponse(sr etxclient.ScopeResponse) []byte {
 	log.Println("sendResponse::Init -> eseguito")
 
-	scoperesponse := scope_response{Code: http.StatusOK, Description: string(sr.Response)}
+	scoperesponse := scope_response{Code: http.StatusOK, Response: string(sr.Response), Cmd: sr.ExecCmd}
 
 	jsonResponse, jsonError := json.Marshal(scoperesponse)
 
@@ -43,6 +51,13 @@ func AlignCommandHandler(w http.ResponseWriter, r *http.Request) {
 
 	ac, err := alignment.ParseMap()
 	if err != nil {
+		appErr := &scope_err{
+			Err:            http.StatusBadRequest,
+			ErrDescription: "Error parsing command: Opzione non valida",
+			ScopeFunction:  "Align",
+			Cmd:            amode,
+		}
+		JSONError(w, appErr, http.StatusBadRequest)
 		return
 	}
 
@@ -73,4 +88,11 @@ func setMode(mode string) scopeparser.AlignMode {
 	default:
 		return "error"
 	}
+}
+
+func JSONError(w http.ResponseWriter, err *scope_err, code int) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.WriteHeader(code)
+	json.NewEncoder(w).Encode(err)
 }
