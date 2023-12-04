@@ -12,7 +12,7 @@ func main() {
 	log.Println("Server::Init -> eseguito")
 	r := mux.NewRouter()
 	// Routes consist of a path and a handler function.
-	r.HandleFunc("/align/{mode}", handlers.AlignCommandHandler)
+	r.HandleFunc("/align", handlers.AlignCommandHandler)
 	log.Println("Server::NewRoute -> registrata")
 	log.Println("Server::Bind a porta 8000 -> eseguito")
 	// Bind to a port and pass our router in
