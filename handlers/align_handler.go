@@ -10,6 +10,7 @@ import (
 
 	scopecommand "github.com/ddefrancesco/scoperunner_server/commands"
 
+
 	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
 
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
@@ -19,12 +20,14 @@ func AlignCommandHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("AlignCommandHandler::Init -> eseguito")
 	// vars := mux.Vars(r)
 	// amode := vars["mode"]
+
 	var amode commons.ScopeRequest
 	err := json.NewDecoder(r.Body).Decode(&amode)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
 	alignment := scopeparser.NewAlignment(setMode(amode.Body))
 
 	ac, err := alignment.ParseMap()
