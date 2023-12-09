@@ -49,11 +49,20 @@ func (ec *EtxClient) ExecReturnNothing(scopecmd string) ScopeResponse {
 	}
 }
 
-func (ec *EtxClient) ExecReturnData(scopecmd string) {
+func (ec *EtxClient) ExecReturnData(scopecmd string) ScopeResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
+
+	resp := []byte("A") //A,L,P,D
+
 	log.Println("ExecCommand::ExecReturnData -> " + scopecmd + " eseguito")
+	return ScopeResponse{
+		Err:      nil,
+		Response: resp,
+		ExecCmd:  scopecmd,
+	}
+
 }
 
 type EtxClient struct {
