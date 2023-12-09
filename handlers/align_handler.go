@@ -9,62 +9,36 @@ import (
 	scopeparser "github.com/ddefrancesco/scoperunner_server/scopeparser"
 
 	scopecommand "github.com/ddefrancesco/scoperunner_server/commands"
+
+
+	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
+
+	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
 )
-
-type scope_request struct {
-	Mode string `json:"mode"`
-}
-
-type scope_response struct {
-	Code     int    `json:"code"`
-	Response string `json:"response"`
-	Cmd      string `json:"cmd"`
-}
-
-type scope_err struct {
-	Err            int    `json:"error_code"`
-	ErrDescription string `json:"error_description"`
-	ScopeFunction  string `json:"scope_function"`
-	Cmd            string `json:"cmd"`
-}
-
-func sendResponse(sr etxclient.ScopeResponse) []byte {
-	log.Println("sendResponse::Init -> eseguito")
-
-	scoperesponse := scope_response{Code: http.StatusAccepted, Response: string(sr.Response), Cmd: sr.ExecCmd}
-
-	jsonResponse, jsonError := json.Marshal(scoperesponse)
-
-	if jsonError != nil {
-		log.Println("Unable to encode JSON")
-	}
-
-	log.Println(string(jsonResponse))
-
-	return jsonResponse
-}
 
 func AlignCommandHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("AlignCommandHandler::Init -> eseguito")
 	// vars := mux.Vars(r)
 	// amode := vars["mode"]
-	var amode scope_request
+
+	var amode commons.ScopeRequest
 	err := json.NewDecoder(r.Body).Decode(&amode)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	alignment := scopeparser.NewAlignment(setMode(amode.Mode))
+
+	alignment := scopeparser.NewAlignment(setMode(amode.Body))
 
 	ac, err := alignment.ParseMap()
 	if err != nil {
-		appErr := &scope_err{
+		appErr := &commons.ScopeErr{
 			Err:            http.StatusBadRequest,
 			ErrDescription: "Error parsing command: Opzione non valida",
 			ScopeFunction:  "Align",
-			Cmd:            amode.Mode,
+			Cmd:            amode.Body,
 		}
-		JSONError(w, appErr, http.StatusBadRequest)
+		handler.JSONError(w, appErr, http.StatusBadRequest)
 		return
 	}
 
@@ -80,8 +54,8 @@ func AlignCommandHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("AlignCommandHandler::End -> eseguito")
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(sendResponse(scopeResp))
+	w.WriteHeader(http.StatusAccepted)
+	w.Write(handler.SendResponse(scopeResp))
 }
 
 func setMode(mode string) scopeparser.AlignMode {
@@ -95,11 +69,4 @@ func setMode(mode string) scopeparser.AlignMode {
 	default:
 		return "error"
 	}
-}
-
-func JSONError(w http.ResponseWriter, err *scope_err, code int) {
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.Header().Set("X-Content-Type-Options", "nosniff")
-	w.WriteHeader(code)
-	json.NewEncoder(w).Encode(err)
 }
