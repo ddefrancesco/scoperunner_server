@@ -5,15 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ddefrancesco/scoperunner_server/etxclient"
-	scopeparser "github.com/ddefrancesco/scoperunner_server/scopeparser"
-
 	scopecommand "github.com/ddefrancesco/scoperunner_server/commands"
-
-
-	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
-
+	"github.com/ddefrancesco/scoperunner_server/etxclient"
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
+	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
+	scopeparser "github.com/ddefrancesco/scoperunner_server/scopeparser"
 )
 
 func AlignCommandHandler(w http.ResponseWriter, r *http.Request) {
