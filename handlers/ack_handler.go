@@ -25,7 +25,7 @@ func AckCommandHandler(w http.ResponseWriter, r *http.Request) {
 	command_string := "ACK <0x06>"
 
 	etx := etxclient.NewClient()
-	scopeResp := etx.ExecReturnData(command_string)
+	scopeResp := etx.ExecGet(command_string)
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")
 	}
@@ -33,5 +33,5 @@ func AckCommandHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(handler.SendResponse(scopeResp))
+	w.Write(handler.SendResponse(r, scopeResp))
 }

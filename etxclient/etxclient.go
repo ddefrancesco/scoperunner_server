@@ -37,11 +37,11 @@ func (ec *EtxClient) Disconnect(port serial.Port) error {
 	return err
 }
 
-func (ec *EtxClient) ExecReturnNothing(scopecmd string) ScopeResponse {
+func (ec *EtxClient) ExecPost(scopecmd string) ScopeResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
-	log.Println("ExecCommand::ExecReturnNothing -> " + scopecmd + " eseguito")
+	log.Println("ExecCommand::ExecPost -> " + scopecmd + " eseguito")
 	return ScopeResponse{
 		Err:      nil,
 		Response: nil,
@@ -49,14 +49,14 @@ func (ec *EtxClient) ExecReturnNothing(scopecmd string) ScopeResponse {
 	}
 }
 
-func (ec *EtxClient) ExecReturnData(scopecmd string) ScopeResponse {
+func (ec *EtxClient) ExecGet(scopecmd string) ScopeResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
 
 	resp := []byte("A") //A,L,P,D
 
-	log.Println("ExecCommand::ExecReturnData -> " + scopecmd + " eseguito")
+	log.Println("ExecCommand::ExecGet -> " + scopecmd + " eseguito")
 	return ScopeResponse{
 		Err:      nil,
 		Response: resp,
