@@ -5,11 +5,11 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ddefrancesco/scoperunner_server/etxclient"
+	"github.com/ddefrancesco/scoperunner_server/etxclient/interfaces"
 	"github.com/ddefrancesco/scoperunner_server/models/commons"
 )
 
-func SendResponse(r *http.Request, sr etxclient.ScopeResponse) []byte {
+func SendResponse(r *http.Request, sr interfaces.ScopeResponse) []byte {
 	log.Println("sendResponse::Init -> eseguito")
 	status := http.StatusOK
 	if r.Method == http.MethodPost {
