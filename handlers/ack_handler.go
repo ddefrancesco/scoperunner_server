@@ -1,26 +1,19 @@
 package handlers
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 
 	"github.com/ddefrancesco/scoperunner_server/etxclient"
 	"github.com/ddefrancesco/scoperunner_server/etxclient/interfaces"
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
-	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
 )
 
 func AckCommandHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("AckCommandHandler::Init -> eseguito")
 	// vars := mux.Vars(r)
 	// amode := vars["mode"]
-	var req commons.ScopeRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
+
 	//GET Request
 
 	command_string := "ACK <0x06>"
@@ -31,6 +24,7 @@ func AckCommandHandler(w http.ResponseWriter, r *http.Request) {
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")
 	}
+	log.Printf("AckCommandHandler::Response %s, \n\t  %s", scopeResp.Response, scopeResp.ExecCmd)
 	log.Println("AckCommandHandler::End -> eseguito")
 
 	w.Header().Set("Content-Type", "application/json")
