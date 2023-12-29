@@ -1,16 +1,13 @@
 package etxclient
 
 import (
+	"fmt"
 	"log"
 
 	"go.bug.st/serial"
-)
 
-type ScopeResponse struct {
-	Err      *serial.PortError
-	Response []byte
-	ExecCmd  string
-}
+	"github.com/ddefrancesco/scoperunner_server/etxclient/interfaces"
+)
 
 func NewClient() *EtxClient {
 	etxclient := &EtxClient{}
@@ -37,27 +34,56 @@ func (ec *EtxClient) Disconnect(port serial.Port) error {
 	return err
 }
 
-func (ec *EtxClient) ExecReturnNothing(scopecmd string) ScopeResponse {
+func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ScopeResponse {
+
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
-	log.Println("ExecCommand::ExecReturnNothing -> " + scopecmd + " eseguito")
-	return ScopeResponse{
+
+	port, err := ec.Connect("/dev/ttyUSB0")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer ec.Disconnect(port)
+	n, err := port.Write([]byte(scopecmd))
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Sent %v bytes\n", n)
+	buff := make([]byte, 100)
+	for {
+		n, err := port.Read(buff)
+		if err != nil {
+			log.Fatal(err)
+			return interfaces.ScopeResponse{
+				Err:      &serial.PortError{},
+				Response: nil,
+				ExecCmd:  scopecmd,
+			}
+		}
+		if n == 0 {
+			fmt.Println("\nEOF")
+			break
+		}
+	}
+	log.Printf("%v", string(buff[:n]))
+	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
+	return interfaces.ScopeResponse{
 		Err:      nil,
 		Response: nil,
 		ExecCmd:  scopecmd,
 	}
 }
 
-func (ec *EtxClient) ExecReturnData(scopecmd string) ScopeResponse {
+func (ec *EtxClient) FetchQuery(scopecmd string) interfaces.ScopeResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
 
 	resp := []byte("A") //A,L,P,D
 
-	log.Println("ExecCommand::ExecReturnData -> " + scopecmd + " eseguito")
-	return ScopeResponse{
+	log.Println("EtxClient::FetchQuery -> " + scopecmd + " eseguito")
+	return interfaces.ScopeResponse{
 		Err:      nil,
 		Response: resp,
 		ExecCmd:  scopecmd,
