@@ -28,7 +28,7 @@ func NewAlignment(m AlignMode) *Alignment {
 	return alignment
 }
 
-func initItems() map[AlignMode]AlignCommandValue {
+func (p *Alignment) InitMap() map[AlignMode]AlignCommandValue {
 	items := make(map[AlignMode]AlignCommandValue)
 	items[AltAz] = AltAzCmd
 	items[Polar] = PolarCmd
@@ -37,7 +37,7 @@ func initItems() map[AlignMode]AlignCommandValue {
 }
 
 func (p *Alignment) ParseMap() (AlignCommandValue, error) {
-	aMap := initItems()
+	aMap := p.InitMap()
 	if _, ok := aMap[p.mode]; ok {
 		return aMap[p.mode], nil
 	}
