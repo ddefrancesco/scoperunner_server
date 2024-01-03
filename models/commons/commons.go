@@ -14,5 +14,5 @@ type ScopeErr struct {
 	Err            int    `json:"error_code"`
 	ErrDescription string `json:"error_description"`
 	ScopeFunction  string `json:"scope_function"`
-	Cmd            string `json:"cmd"`
+	Cmd            any    `json:"cmd"`
 }

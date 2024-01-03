@@ -59,6 +59,9 @@ func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ScopeResponse {
 	switch {
 	case strings.Contains(scopecmd, "ACK"):
 		sr.Response = []byte("A") //A,L,P,D
+	case strings.Contains(scopecmd, ":GA#"):
+		//sDD*MM’SS# Latitude
+		sr.Response = []byte("s41*12’00#")
 	default:
 		sr.Response = []byte("D")
 	}
