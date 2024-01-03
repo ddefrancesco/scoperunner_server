@@ -114,8 +114,8 @@ func TestInfoCommand_StringValue(t *testing.T) {
 		// TODO: Add test cases.
 		{
 			name:   "test string value",
-			fields: fields{Info: InfoAltitude, Value: ""},
-			want:   "altitude",
+			fields: fields{Info: InfoAltitude, Value: InfoAltitudeCmd},
+			want:   ":GA#",
 		},
 	}
 	for _, tt := range tests {
