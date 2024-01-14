@@ -4,8 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ddefrancesco/scoperunner_server/etxclient"
-	"github.com/ddefrancesco/scoperunner_server/etxclient/interfaces"
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
 	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
 	"github.com/ddefrancesco/scoperunner_server/scopeparser"
@@ -13,6 +11,7 @@ import (
 )
 
 func InfoCommandHandler(w http.ResponseWriter, r *http.Request) {
+
 	log.Println("InfoCommandHandler::Init -> eseguito")
 	vars := mux.Vars(r)
 	var infoParam = vars["item"]
@@ -32,9 +31,9 @@ func InfoCommandHandler(w http.ResponseWriter, r *http.Request) {
 		handler.JSONError(w, appErr, http.StatusBadRequest)
 		return
 	}
-	var serialDevice interfaces.SerialClient
-	etx := etxclient.NewFakeClient()
-	serialDevice = etx
+
+	serialDevice := handler.GetScopeClient()
+
 	scopeResp := serialDevice.FetchQuery(info.StringValue())
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")

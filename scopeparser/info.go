@@ -1,10 +1,13 @@
 package scopeparser
 
-import "fmt"
+import (
+	"errors"
+)
 
 type Info string
 type InfoCommandValue string
-type ErrUnknownInfoCommand error
+
+var ErrUnknownInfoCommand = errors.New("Unknown Command")
 
 const (
 	InfoAltitude          Info = "altitude"
@@ -72,7 +75,7 @@ const (
 type InfoCommand struct {
 	Info  Info
 	Value InfoCommandValue
-	Err   ErrUnknownInfoCommand
+	Err   error
 }
 
 func NewInfoCommand(m Info) *InfoCommand {
@@ -122,18 +125,18 @@ func (ic *InfoCommand) ParseMap() (InfoCommandValue, error) {
 	if _, ok := aMap[ic.Info]; ok {
 		return aMap[ic.Info], nil
 	}
-	return "error", fmt.Errorf("unknown info")
+	return "", ic.Error()
 
 }
 
 func (ic *InfoCommand) String() string {
-	return string(ic.Value)
+	return string(ic.Info)
 }
 
 func (ic *InfoCommand) StringValue() string {
 	return string(ic.Value)
 }
 
-func (ic *InfoCommand) Error() string {
-	return fmt.Sprintf("unknown info command: %s", ic.Err)
+func (ic *InfoCommand) Error() error {
+	return ErrUnknownInfoCommand
 }

@@ -5,8 +5,10 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/ddefrancesco/scoperunner_server/etxclient"
 	"github.com/ddefrancesco/scoperunner_server/etxclient/interfaces"
 	"github.com/ddefrancesco/scoperunner_server/models/commons"
+	"github.com/spf13/viper"
 )
 
 func SendResponse(r *http.Request, sr interfaces.ScopeResponse) []byte {
@@ -33,4 +35,17 @@ func JSONError(w http.ResponseWriter, err *commons.ScopeErr, code int) {
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.WriteHeader(code)
 	json.NewEncoder(w).Encode(err)
+}
+
+func GetScopeClient() interfaces.SerialClient {
+	var serialDevice interfaces.SerialClient
+	if viper.GetBool("environments.fakescope") {
+		etx := etxclient.NewFakeClient()
+		serialDevice = etx
+	} else {
+		etx := etxclient.NewClient()
+		serialDevice = etx
+	}
+	log.Println("GetScopeClient::Init -> eseguito")
+	return serialDevice
 }

@@ -4,8 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ddefrancesco/scoperunner_server/etxclient"
-	"github.com/ddefrancesco/scoperunner_server/etxclient/interfaces"
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
 )
 
@@ -17,9 +15,8 @@ func AckCommandHandler(w http.ResponseWriter, r *http.Request) {
 	//GET Request
 
 	command_string := "ACK <0x06>"
-	var serialDevice interfaces.SerialClient
-	etx := etxclient.NewFakeClient()
-	serialDevice = etx
+
+	serialDevice := handler.GetScopeClient()
 	scopeResp := serialDevice.FetchQuery(command_string)
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")

@@ -1,6 +1,7 @@
 package scopeparser
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 )
@@ -15,6 +16,15 @@ func TestNewInfoCommand(t *testing.T) {
 		want *InfoCommand
 	}{
 		// TODO: Add test cases.
+		{
+			name: "test new info command",
+			args: args{
+				m: InfoAltitude,
+			},
+			want: &InfoCommand{
+				Info: InfoAltitude,
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -72,12 +82,6 @@ func TestInfoCommand_ParseMap(t *testing.T) {
 	}{
 
 		{
-			name:    "test parse error",
-			fields:  fields{Info: "accazzo"},
-			want:    ("error"),
-			wantErr: true,
-		},
-		{
 			name:   "test parse ok",
 			fields: fields{Info: InfoAltitude},
 			want:   InfoCommandValue(InfoAltitudeCmd),
@@ -104,7 +108,7 @@ func TestInfoCommand_StringValue(t *testing.T) {
 	type fields struct {
 		Info  Info
 		Value InfoCommandValue
-		Err   ErrUnknownInfoCommand
+		Err   error
 	}
 	tests := []struct {
 		name   string
@@ -130,4 +134,45 @@ func TestInfoCommand_StringValue(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestInfoCommand_String(t *testing.T) {
+	type fields struct {
+		Info  Info
+		Value InfoCommandValue
+		Err   error
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   string
+	}{
+
+		{
+			name:   "test string",
+			fields: fields{Info: InfoAltitude, Value: InfoAltitudeCmd},
+			want:   "altitude",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ic := &InfoCommand{
+				Info:  tt.fields.Info,
+				Value: tt.fields.Value,
+				Err:   tt.fields.Err,
+			}
+			if got := ic.String(); got != tt.want {
+				t.Errorf("InfoCommand.String() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInfoCommand_ErrUnknownCommand(t *testing.T) {
+	ic := NewInfoCommand("accazzo")
+
+	if _, err := ic.ParseMap(); !errors.Is(err, ErrUnknownInfoCommand) {
+		t.Errorf("wrong error: %v", err)
+	}
+
 }

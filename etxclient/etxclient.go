@@ -70,7 +70,7 @@ func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ScopeResponse {
 	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
 	return interfaces.ScopeResponse{
 		Err:      nil,
-		Response: nil,
+		Response: []byte("Command Accepted"),
 		ExecCmd:  scopecmd,
 	}
 }

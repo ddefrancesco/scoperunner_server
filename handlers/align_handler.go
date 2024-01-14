@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	scopecommand "github.com/ddefrancesco/scoperunner_server/commands"
-	"github.com/ddefrancesco/scoperunner_server/etxclient"
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
 	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
 	scopeparser "github.com/ddefrancesco/scoperunner_server/scopeparser"
@@ -42,9 +41,8 @@ func AlignCommandHandler(w http.ResponseWriter, r *http.Request) {
 
 	command_string := alignCmd.ParseCommand()
 
-	//etx := etxclient.NewClient()
-	etx := etxclient.NewFakeClient()
-	scopeResp := etx.ExecCommand(command_string)
+	serialDevice := handler.GetScopeClient()
+	scopeResp := serialDevice.ExecCommand(command_string)
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")
 	}
