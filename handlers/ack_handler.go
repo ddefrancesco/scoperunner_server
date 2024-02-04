@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/ddefrancesco/scoperunner_server/etxclient/interfaces"
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
 )
 
@@ -21,10 +22,11 @@ func AckCommandHandler(w http.ResponseWriter, r *http.Request) {
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")
 	}
+	scopeResps := []interfaces.ScopeResponse{scopeResp}
 	log.Printf("AckCommandHandler::Response %s, \n\t  %s", scopeResp.Response, scopeResp.ExecCmd)
 	log.Println("AckCommandHandler::End -> eseguito")
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(handler.SendResponse(r, scopeResp))
+	w.Write(handler.SendResponses(r, scopeResps))
 }

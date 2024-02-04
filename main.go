@@ -1,22 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/ddefrancesco/scoperunner_server/handlers"
 	"github.com/gorilla/mux"
-	"github.com/spf13/viper"
+
+	configuration "github.com/ddefrancesco/scoperunner_server/configurations"
 )
 
 func main() {
-	viper.SetConfigName("scope-server-config")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
-	err := viper.ReadInConfig()
+	err := configuration.InitConfig()
 	if err != nil {
-		fmt.Println("error reading in config: ", err)
+		panic(err)
 	}
 	log.Println("Server::Init -> eseguito")
 	r := mux.NewRouter()
@@ -25,7 +22,7 @@ func main() {
 	log.Println("Server::NewRoute /align -> registrata")
 	r.HandleFunc("/ack", handlers.AckCommandHandler).Methods("GET")
 	log.Println("Server::NewRoute /ack -> registrata")
-	r.HandleFunc("/info/{item}", handlers.InfoCommandHandler).Methods("GET")
+	r.HandleFunc("/info/{infos}", handlers.InfoCommandHandler).Methods("GET")
 	log.Println("Server::NewRoute /info -> registrata")
 	log.Println("Server::Bind a porta 8000 -> eseguito")
 	// Bind to a port and pass our router in

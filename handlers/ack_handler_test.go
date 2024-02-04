@@ -5,10 +5,15 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	configuration "github.com/ddefrancesco/scoperunner_server/configurations"
 )
 
 func TestAckCommandHandler0(t *testing.T) {
-
+	err := configuration.InitConfig()
+	if err != nil {
+		panic(err)
+	}
 	req := httptest.NewRequest(http.MethodGet, "/ack", nil)
 	w := httptest.NewRecorder()
 	AckCommandHandler(w, req)

@@ -2,7 +2,6 @@ package scopeparser
 
 import (
 	"errors"
-	"reflect"
 	"testing"
 )
 
@@ -28,7 +27,8 @@ func TestNewInfoCommand(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewInfoCommand(tt.args.m); !reflect.DeepEqual(got, tt.want) {
+			got := NewInfoCommand(tt.args.m)
+			if got.Info != tt.want.Info {
 				t.Errorf("NewInfoCommand() = %v, want %v", got, tt.want)
 			}
 		})

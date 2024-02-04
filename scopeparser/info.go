@@ -14,9 +14,8 @@ const (
 	InfoLTT               Info = "ltt"
 	InfoBrighterMagLimit  Info = "browse_bml"
 	InfoCurrentDate       Info = "current_date"
-	InfoClockFmt12        Info = "clock_12"
+	InfoClockFmt          Info = "clock_fmt"
 	InfoDeclination       Info = "declination"
-	InfoClockFmt24        Info = "clock_24"
 	InfoSelectedTargetDec Info = "sel_target_dec"
 	InfoFieldDiameter     Info = "field_diameter"
 	InfoFainterMagLimit   Info = "fainter_mag_limit"
@@ -46,7 +45,7 @@ const (
 	InfoLTTCmd               InfoCommandValue = ":Ga#"
 	InfoBrighterMagLimitCmd  InfoCommandValue = ":Gb#"
 	InfoCurrentDateCmd       InfoCommandValue = ":GC#"
-	InfoClockFmt12Cmd        InfoCommandValue = ":Gc#"
+	InfoClockFmtCmd          InfoCommandValue = ":Gc#"
 	InfoDeclinationCmd       InfoCommandValue = ":GD#"
 	InfoSelectedTargetDecCmd InfoCommandValue = ":Gd#"
 	InfoFieldDiameterCmd     InfoCommandValue = ":GF#"
@@ -91,7 +90,7 @@ func (ic *InfoCommand) InitMap() map[Info]InfoCommandValue {
 	infoMap[InfoLTT] = InfoLTTCmd
 	infoMap[InfoBrighterMagLimit] = InfoBrighterMagLimitCmd
 	infoMap[InfoCurrentDate] = InfoCurrentDateCmd
-	infoMap[InfoClockFmt12] = InfoClockFmt12Cmd
+	infoMap[InfoClockFmt] = InfoClockFmtCmd
 	infoMap[InfoDeclination] = InfoDeclinationCmd
 	infoMap[InfoSelectedTargetDec] = InfoSelectedTargetDecCmd
 	infoMap[InfoFieldDiameter] = InfoFieldDiameterCmd
