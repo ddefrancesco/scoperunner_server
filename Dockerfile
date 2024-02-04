@@ -6,6 +6,7 @@ RUN adduser scope -u 1001 -D -G scope /home/scope
 FROM golang:1.21 as builder
 WORKDIR /scoperunner-wkdir
 COPY --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
+COPY ./scope-server-config.yaml /scoperunner-wkdir/scope-server-config.yaml
 COPY . .
 RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux go build -o ./scoperunner-server 
