@@ -40,7 +40,7 @@ func TestNewAlignment(t *testing.T) {
 	}
 }
 
-func Test_initItems(t *testing.T) {
+func Test_InitMap(t *testing.T) {
 	tests := []struct {
 		name string
 		want map[AlignMode]AlignCommandValue
@@ -57,8 +57,11 @@ func Test_initItems(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := initItems(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("initItems() = %v, want %v", got, tt.want)
+			align := &Alignment{
+				mode: AltAz,
+			}
+			if got := align.InitMap(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("InitMap() = %v, want %v", got, tt.want)
 			}
 		})
 	}

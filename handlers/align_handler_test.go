@@ -8,11 +8,15 @@ import (
 	"strings"
 	"testing"
 
+	configuration "github.com/ddefrancesco/scoperunner_server/configurations"
 	scopeparser "github.com/ddefrancesco/scoperunner_server/scopeparser"
 )
 
 func TestAlignCommandHandler(t *testing.T) {
-
+	err := configuration.InitConfig()
+	if err != nil {
+		panic(err)
+	}
 	body := `{"body": "altaz"}`
 	req := httptest.NewRequest(http.MethodPost, "/align", strings.NewReader(body))
 	w := httptest.NewRecorder()
