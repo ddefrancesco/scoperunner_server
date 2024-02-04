@@ -56,7 +56,7 @@ func TestFakeEtxClient_Date_Format(t *testing.T) {
 }
 
 func TestFakeEtxClient_MinQuality(t *testing.T) {
-
+	t.Skip("Not meaningful")
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 	assert.True(t, r1.Intn(7) >= 1 && r1.Intn(7) <= 7)
