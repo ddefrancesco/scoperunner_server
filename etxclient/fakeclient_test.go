@@ -18,7 +18,7 @@ func TestFakeEtxClient_FetchQuery(t *testing.T) {
 		name string
 		ec   *FakeEtxClient
 		args args
-		want interfaces.ScopeResponse
+		want interfaces.ETXResponse
 	}{
 		// TODO: Add test cases.
 		{
@@ -27,7 +27,7 @@ func TestFakeEtxClient_FetchQuery(t *testing.T) {
 			args: args{
 				scopecmd: ":GC#",
 			},
-			want: interfaces.ScopeResponse{
+			want: interfaces.ETXResponse{
 				Err:      nil,
 				Response: []byte(time.Now().Format("01/02/06#")),
 				ExecCmd:  ":GC#",

@@ -35,25 +35,25 @@ func (ec *FakeEtxClient) Disconnect(port serial.Port) error {
 	return err
 }
 
-func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ScopeResponse {
+func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
 
 	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
-	return interfaces.ScopeResponse{
+	return interfaces.ETXResponse{
 		Err:      nil,
 		Response: []byte("Command Accepted"),
 		ExecCmd:  scopecmd,
 	}
 }
 
-func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ScopeResponse {
+func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ETXResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
-	sr := interfaces.ScopeResponse{
+	sr := interfaces.ETXResponse{
 		Err:      nil,
 		Response: nil,
 		ExecCmd:  scopecmd,

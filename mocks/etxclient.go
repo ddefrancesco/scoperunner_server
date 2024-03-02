@@ -9,12 +9,12 @@ type EtxMock struct {
 	mock.Mock
 }
 
-func (mock *EtxMock) ExecCommand(scopecmd string) interfaces.ScopeResponse {
+func (mock *EtxMock) ExecCommand(scopecmd string) interfaces.ETXResponse {
 	args := mock.Called(scopecmd)
-	return args.Get(0).(interfaces.ScopeResponse)
+	return args.Get(0).(interfaces.ETXResponse)
 
 }
-func (mock *EtxMock) FetchQuery(scopecmd string) interfaces.ScopeResponse {
+func (mock *EtxMock) FetchQuery(scopecmd string) interfaces.ETXResponse {
 	args := mock.Called(scopecmd)
-	return args.Get(0).(interfaces.ScopeResponse)
+	return args.Get(0).(interfaces.ETXResponse)
 }

@@ -2,7 +2,7 @@ package interfaces
 
 import "go.bug.st/serial"
 
-type ScopeResponse struct {
+type ETXResponse struct {
 	Err      *serial.PortError
 	Response []byte
 	ExecCmd  string
@@ -11,6 +11,6 @@ type ScopeResponse struct {
 type SerialClient interface {
 	Connect(serialPort string) (serial.Port, error)
 	Disconnect(port serial.Port) error
-	ExecCommand(scopecmd string) ScopeResponse
-	FetchQuery(scopecmd string) ScopeResponse
+	ExecCommand(scopecmd string) ETXResponse
+	FetchQuery(scopecmd string) ETXResponse
 }

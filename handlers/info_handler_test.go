@@ -47,7 +47,7 @@ func TestInfoCommandHandlerParseRequestParams(t *testing.T) {
 
 	tMap, _ := converter.RequestParamsToInfoArray(infoParam)
 	var infoCommandArray []scopeparser.InfoCommand
-	var scopeResponses []interfaces.ScopeResponse
+	var scopeResponses []interfaces.ETXResponse
 	for _, v := range tMap {
 		t.Logf("value: %v", v)
 		if v == scopeparser.InfoAzimuth || v == scopeparser.InfoAltitude || v == scopeparser.InfoDeclination {
@@ -67,7 +67,7 @@ func TestInfoCommandHandlerParseRequestParams(t *testing.T) {
 		scopeResponses = append(scopeResponses, scopeResponse)
 	}
 	assert.Equal(t, 3, len(scopeResponses))
-	assert.Contains(t, scopeResponses, interfaces.ScopeResponse{
+	assert.Contains(t, scopeResponses, interfaces.ETXResponse{
 		Err:      nil,
 		Response: []byte("s41*53’30#"),
 		ExecCmd:  ":GA#",

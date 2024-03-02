@@ -34,7 +34,7 @@ func (ec *EtxClient) Disconnect(port serial.Port) error {
 	return err
 }
 
-func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ScopeResponse {
+func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 
 	// TODO: Open serial
 	//       Exec Command scope
@@ -55,7 +55,7 @@ func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ScopeResponse {
 		n, err := port.Read(buff)
 		if err != nil {
 			log.Fatal(err)
-			return interfaces.ScopeResponse{
+			return interfaces.ETXResponse{
 				Err:      &serial.PortError{},
 				Response: nil,
 				ExecCmd:  scopecmd,
@@ -68,14 +68,14 @@ func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ScopeResponse {
 	}
 	log.Printf("%v", string(buff[:n]))
 	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
-	return interfaces.ScopeResponse{
+	return interfaces.ETXResponse{
 		Err:      nil,
 		Response: []byte("Command Accepted"),
 		ExecCmd:  scopecmd,
 	}
 }
 
-func (ec *EtxClient) FetchQuery(scopecmd string) interfaces.ScopeResponse {
+func (ec *EtxClient) FetchQuery(scopecmd string) interfaces.ETXResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
@@ -83,7 +83,7 @@ func (ec *EtxClient) FetchQuery(scopecmd string) interfaces.ScopeResponse {
 	resp := []byte("A") //A,L,P,D
 
 	log.Println("EtxClient::FetchQuery -> " + scopecmd + " eseguito")
-	return interfaces.ScopeResponse{
+	return interfaces.ETXResponse{
 		Err:      nil,
 		Response: resp,
 		ExecCmd:  scopecmd,
