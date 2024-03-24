@@ -80,8 +80,8 @@ func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 		// 			D = ‘0’ if the date is invalid. The string is the null string.
 		// 			D = ‘1’ for valid dates and the string is “Updating Planetary Data# #”
 		// Note: For LX200GPS/RCX400 this is the UTC data!
-		a := append(sr.Response, []byte(" 1")...)
-		b := []byte("Updating Planetary Data# #")
+		a := append(sr.Response, []byte(" 1 ")...)
+		b := []byte("Updating Planetary Data# ")
 		c := append(a, b...)
 
 		sr.Response = []byte(c)
@@ -418,4 +418,12 @@ func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ETXResponse {
 }
 
 type FakeEtxClient struct {
+}
+
+func parse(s string) (time.Time, error) {
+	d, err := time.Parse("01/02/06", s)
+	if err != nil {
+		return d, err
+	}
+	return d, nil
 }
