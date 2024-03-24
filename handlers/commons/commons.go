@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func SendResponse(r *http.Request, sr interfaces.ScopeResponse) []byte {
+func SendResponse(r *http.Request, sr interfaces.ETXResponse) []byte {
 	log.Println("sendResponse::Init -> eseguito")
 	status := http.StatusOK
 	if r.Method == http.MethodPost {
@@ -30,7 +30,7 @@ func SendResponse(r *http.Request, sr interfaces.ScopeResponse) []byte {
 	return jsonResponse
 }
 
-func SendResponses(r *http.Request, sr []interfaces.ScopeResponse) []byte {
+func SendResponses(r *http.Request, sr []interfaces.ETXResponse) []byte {
 	log.Println("sendResponse::Init -> eseguito")
 	status := http.StatusOK
 	var jsonResponses []commons.ScopeResponse

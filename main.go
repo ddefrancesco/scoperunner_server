@@ -24,6 +24,8 @@ func main() {
 	log.Println("Server::NewRoute /ack -> registrata")
 	r.HandleFunc("/info/{infos}", handlers.InfoCommandHandler).Methods("GET")
 	log.Println("Server::NewRoute /info -> registrata")
+	r.HandleFunc("/set", handlers.SetCommandHandler).Methods("POST")
+	log.Println("Server::NewRoute /set -> registrata")
 	log.Println("Server::Bind a porta 8000 -> eseguito")
 	// Bind to a port and pass our router in
 	log.Fatal(http.ListenAndServe(":8000", r))

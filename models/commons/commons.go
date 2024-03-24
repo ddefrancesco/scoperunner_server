@@ -4,6 +4,10 @@ type ScopeRequest struct {
 	Body string `json:"body"`
 }
 
+type ScopeSetRequest struct {
+	Body map[string]string `json:"body"`
+}
+
 type ScopeResponse struct {
 	Code     int    `json:"code"`
 	Response string `json:"response"`

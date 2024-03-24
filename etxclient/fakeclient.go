@@ -35,25 +35,236 @@ func (ec *FakeEtxClient) Disconnect(port serial.Port) error {
 	return err
 }
 
-func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ScopeResponse {
-
-	// TODO: Open serial
-	//       Exec Command scope
-	// 		 Close serial
-
-	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
-	return interfaces.ScopeResponse{
+func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
+	sr := interfaces.ETXResponse{
 		Err:      nil,
 		Response: []byte("Command Accepted"),
 		ExecCmd:  scopecmd,
 	}
-}
-
-func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ScopeResponse {
 	// TODO: Open serial
 	//       Exec Command scope
 	// 		 Close serial
-	sr := interfaces.ScopeResponse{
+	switch {
+	case strings.Contains(scopecmd, ":Sa"):
+		//Set target object altitude to sDD*MM# or sDD*MM’SS# [LX 16”, Autostar, LX200GPS/RCX400]
+		// Returns:
+		// 1 Object within slew range
+		// 0 Object out of slew range
+		sr.Response = append(sr.Response, []byte(" 1")...)
+	case strings.Contains(scopecmd, ":Sb"):
+		/*Set Brighter limit to the ASCII decimal magnitude string. SMM.M
+		Returns:
+		0 - Valid
+		1 – invalid number*/
+		sr.Response = []byte("0")
+
+	case strings.Contains(scopecmd, ":SB"):
+		/*Set Baud Rate n, where n is an ASCII digit (1..9) with the following interpertation
+					1 56.7K
+					2 38.4K
+					3 28.8K
+					4 19.2K
+					5 14.4K
+					6 9600
+					7 4800
+					8 2400
+					9 1200
+		Returns:
+		1 At the current baud rate and then changes to the new rate for further communication*/
+
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":SC"):
+		// 		Change Handbox Date to MM/DD/YY
+		// 		Returns: <D><string>
+		// 			D = ‘0’ if the date is invalid. The string is the null string.
+		// 			D = ‘1’ for valid dates and the string is “Updating Planetary Data# #”
+		// Note: For LX200GPS/RCX400 this is the UTC data!
+		a := append(sr.Response, []byte(" 1 ")...)
+		b := []byte("Updating Planetary Data# ")
+		c := append(a, b...)
+
+		sr.Response = []byte(c)
+
+	case strings.Contains(scopecmd, ":Sd"):
+		//Set target object declination to sDD*MM or sDD*MM:SS depending on the current precision setting
+		// Returns:
+		// 1 - Dec Accepted
+		// 0 – Dec invalid
+
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":SE"):
+		//Sets target object to the specificed selenographic latitude on the Moon.
+		// Returns 1 - If moon is up and coordinates are accepted.
+		// 		   0 – If the coordinates are invalid
+
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":Se"):
+		//Sets the target object to the specified selenogrphic longitude on the Moon
+		// Returns 1 – If the Moon is up and coordinates are accepted.
+		// 		   0 – If the coordinates are invalid for any reason.
+
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":Sf"):
+		//Set faint magnitude limit to sMM.M
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":SF"):
+		//Set FIELD/IDENTIFY field diameter to NNN arc minutes.
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":Sg"):
+		//Set current site’s longitude to DDD*MM an ASCII position string
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":SG"):
+		//Set the number of hours added to local time to yield UTC
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+		// Generate a random number between 0-1 to determine valid/invalid response
+		//rand.Seed(time.Now().UnixNano())
+		validReturn(sr)
+
+	case strings.Contains(scopecmd, ":SH"):
+		//Set Dightlight Savings Mode [Autostar II Only]. D=1 Sets Daylight savings. D=0 Clears Daylight savings.
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":Sh"):
+		//Set the minimum object elevation limit to DD#
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":Sl#"):
+		//Set the size of the smallest object returned by FIND/BROWSE to NNNN arc minutes
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+		sr.Response = append(sr.Response, []byte("1")...)
+
+	case strings.Contains(scopecmd, ":SL"):
+		/*Set the local Time
+		Returns:
+			0 – Invalid
+			1 - Valid*/
+		sr.Response = append(sr.Response, []byte("1")...)
+
+	case strings.Contains(scopecmd, ":So"):
+		//Set highest elevation to which the telescope will slew
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+
+		sr.Response = append(sr.Response, []byte("1")...)
+	case strings.Contains(scopecmd, ":Sq"):
+		//Step the quality of limit used in FIND/BROWSE through its cycle of VP … SU. Current setting can be queried with :Gq#
+		// Returns: Nothing
+
+	case strings.Contains(scopecmd, ":Sr"):
+		//Set target object RA to HH:MM.T or HH:MM:SS depending on the current precision setting.
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":Ss"):
+		//Set the size of the largest object the FIND/BROWSE command will return to NNNN arc minutes
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":SS"):
+		//Sets the local sidereal time to HH:MM:SS
+		//Returns:
+		//			0 – Invalid
+		//			1 - Valid
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":St#"):
+		//Sets the current site latitude to sDD*MM#
+		// Returns:
+		// 		0 – Invalid
+		//      1 - Valid
+		sr.Response = append(sr.Response, []byte("1")...)
+
+	case strings.Contains(scopecmd, ":ST"):
+		//Sets the current tracking rate to TTT.T hertz, assuming a model where a 60.0 Hertz synchronous motor will cause the RA
+		//axis to make exactly one revolution in 24 hours.
+		//Returns:
+		//			0 – Invalid
+		//			1 - Valid
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":Sw"):
+		//Set maximum slew rate to N degrees per second. N is the range (2..8)
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+		sr.Response = append(sr.Response, []byte(" 1")...)
+
+	case strings.Contains(scopecmd, ":Sy"):
+		//Sets the object selection string used by the FIND/BROWSE command.
+		// Returns:
+		//		0 – Invalid
+		// 		1 - Valid
+		sr.Response = append(sr.Response, []byte("1")...)
+
+	case strings.Contains(scopecmd, ":Sz"):
+		//Sets the target Object Azimuth [LX 16” and LX200GPS/RCX400 only]
+		// Returns:
+		// 		0 – Invalid
+		// 		1 - Valid
+
+		sr.Response = append(sr.Response, []byte("1")...)
+
+	default:
+		sr.Response = []byte("Command Accepted")
+	}
+
+	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
+	return interfaces.ETXResponse{
+		Err:      nil,
+		Response: sr.Response,
+		ExecCmd:  scopecmd,
+	}
+}
+
+func validReturn(sr interfaces.ETXResponse) {
+	r := rand.Float64()
+	if r < 0.5 {
+		sr.Response = append(sr.Response, []byte(" 1")...)
+	} else {
+		sr.Response = []byte("0")
+	}
+}
+
+func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ETXResponse {
+	// TODO: Open serial
+	//       Exec Command scope
+	// 		 Close serial
+	sr := interfaces.ETXResponse{
 		Err:      nil,
 		Response: nil,
 		ExecCmd:  scopecmd,
@@ -207,4 +418,12 @@ func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ScopeResponse {
 }
 
 type FakeEtxClient struct {
+}
+
+func parse(s string) (time.Time, error) {
+	d, err := time.Parse("01/02/06", s)
+	if err != nil {
+		return d, err
+	}
+	return d, nil
 }

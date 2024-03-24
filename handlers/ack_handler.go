@@ -22,7 +22,7 @@ func AckCommandHandler(w http.ResponseWriter, r *http.Request) {
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")
 	}
-	scopeResps := []interfaces.ScopeResponse{scopeResp}
+	scopeResps := []interfaces.ETXResponse{scopeResp}
 	log.Printf("AckCommandHandler::Response %s, \n\t  %s", scopeResp.Response, scopeResp.ExecCmd)
 	log.Println("AckCommandHandler::End -> eseguito")
 

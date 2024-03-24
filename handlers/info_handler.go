@@ -31,7 +31,7 @@ func InfoCommandHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var infoCommandArray []scopeparser.InfoCommand
-	var scopeResponses []interfaces.ScopeResponse
+	var scopeResponses []interfaces.ETXResponse
 	for _, v := range tMap {
 		infoCommand := *scopeparser.NewInfoCommand(v)
 		infoCommandArray = append(infoCommandArray, infoCommand)
