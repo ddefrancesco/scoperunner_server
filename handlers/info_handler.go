@@ -52,7 +52,7 @@ func InfoCommandHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		scopeResponse := serialDevice.FetchQuery(v.StringValue())
+		scopeResponse := serialDevice.ExecCommand(v.StringValue())
 		if scopeResponse.Err != nil {
 			log.Fatal("Error executing command: porta seriale non trovata")
 		}

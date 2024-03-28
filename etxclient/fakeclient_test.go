@@ -42,7 +42,7 @@ func TestFakeEtxClient_FetchQuery(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			ec := &FakeEtxClient{}
-			if got := ec.FetchQuery(tt.args.scopecmd); !reflect.DeepEqual(got, tt.want) {
+			if got := ec.ExecCommand(tt.args.scopecmd); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("FakeEtxClient.FetchQuery() = %v, want %v", got, tt.want)
 			}
 		})

@@ -40,6 +40,16 @@ func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 	//       Exec Command scope
 	// 		 Close serial
 
+	n, buff, shouldReturn, returnValue := ec.ConnectTTY(scopecmd)
+	if shouldReturn {
+		return returnValue
+	}
+	log.Printf("%v", string(buff[:n]))
+	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
+	return returnValue
+}
+
+func (ec *EtxClient) ConnectTTY(scopecmd string) (int, []byte, bool, interfaces.ETXResponse) {
 	port, err := ec.Connect("/dev/ttyUSB0")
 	if err != nil {
 		log.Fatal(err)
@@ -50,12 +60,12 @@ func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 		log.Fatal(err)
 	}
 	log.Printf("Sent %v bytes\n", n)
-	buff := make([]byte, 100)
+	buff := make([]byte, 1024)
 	for {
 		n, err := port.Read(buff)
 		if err != nil {
 			log.Fatal(err)
-			return interfaces.ETXResponse{
+			return 0, nil, true, interfaces.ETXResponse{
 				Err:      &serial.PortError{},
 				Response: nil,
 				ExecCmd:  scopecmd,
@@ -66,29 +76,7 @@ func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 			break
 		}
 	}
-	log.Printf("%v", string(buff[:n]))
-	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
-	return interfaces.ETXResponse{
-		Err:      nil,
-		Response: []byte("Command Accepted"),
-		ExecCmd:  scopecmd,
-	}
-}
-
-func (ec *EtxClient) FetchQuery(scopecmd string) interfaces.ETXResponse {
-	// TODO: Open serial
-	//       Exec Command scope
-	// 		 Close serial
-
-	resp := []byte("A") //A,L,P,D
-
-	log.Println("EtxClient::FetchQuery -> " + scopecmd + " eseguito")
-	return interfaces.ETXResponse{
-		Err:      nil,
-		Response: resp,
-		ExecCmd:  scopecmd,
-	}
-
+	return n, buff, false, interfaces.ETXResponse{}
 }
 
 type EtxClient struct {

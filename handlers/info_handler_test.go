@@ -63,7 +63,7 @@ func TestInfoCommandHandlerParseRequestParams(t *testing.T) {
 		t.Logf("infoCommnd: %v", v)
 		ic, _ := v.ParseMap()
 		t.Logf("infoCommndValue: %v", ic)
-		scopeResponse := serialDevice.FetchQuery(v.StringValue())
+		scopeResponse := serialDevice.ExecCommand(v.StringValue())
 		scopeResponses = append(scopeResponses, scopeResponse)
 	}
 	assert.Equal(t, 3, len(scopeResponses))

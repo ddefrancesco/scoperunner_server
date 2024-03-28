@@ -239,37 +239,6 @@ func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 
 		sr.Response = append(sr.Response, []byte("1")...)
 
-	default:
-		sr.Response = []byte("Command Accepted")
-	}
-
-	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
-	return interfaces.ETXResponse{
-		Err:      nil,
-		Response: sr.Response,
-		ExecCmd:  scopecmd,
-	}
-}
-
-func validReturn(sr interfaces.ETXResponse) {
-	r := rand.Float64()
-	if r < 0.5 {
-		sr.Response = append(sr.Response, []byte(" 1")...)
-	} else {
-		sr.Response = []byte("0")
-	}
-}
-
-func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ETXResponse {
-	// TODO: Open serial
-	//       Exec Command scope
-	// 		 Close serial
-	sr := interfaces.ETXResponse{
-		Err:      nil,
-		Response: nil,
-		ExecCmd:  scopecmd,
-	}
-	switch {
 	case strings.Contains(scopecmd, "ACK"):
 		sr.Response = []byte("A") //A,L,P,D
 	case strings.Contains(scopecmd, ":GA#"):
@@ -412,9 +381,21 @@ func (ec *FakeEtxClient) FetchQuery(scopecmd string) interfaces.ETXResponse {
 		sr.Response = []byte("Command Accepted")
 	}
 
-	log.Println("EtxClient::FetchQuery -> " + scopecmd + " eseguito")
-	return sr
+	log.Println("EtxClient::ExecCommand -> " + scopecmd + " eseguito")
+	return interfaces.ETXResponse{
+		Err:      nil,
+		Response: sr.Response,
+		ExecCmd:  scopecmd,
+	}
+}
 
+func validReturn(sr interfaces.ETXResponse) {
+	r := rand.Float64()
+	if r < 0.5 {
+		sr.Response = append(sr.Response, []byte(" 1")...)
+	} else {
+		sr.Response = []byte("0")
+	}
 }
 
 type FakeEtxClient struct {

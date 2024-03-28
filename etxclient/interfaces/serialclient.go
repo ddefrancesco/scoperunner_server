@@ -12,5 +12,4 @@ type SerialClient interface {
 	Connect(serialPort string) (serial.Port, error)
 	Disconnect(port serial.Port) error
 	ExecCommand(scopecmd string) ETXResponse
-	FetchQuery(scopecmd string) ETXResponse
 }

@@ -18,7 +18,7 @@ func AckCommandHandler(w http.ResponseWriter, r *http.Request) {
 	command_string := "ACK <0x06>"
 
 	serialDevice := handler.GetScopeClient()
-	scopeResp := serialDevice.FetchQuery(command_string)
+	scopeResp := serialDevice.ExecCommand(command_string)
 	if scopeResp.Err != nil {
 		log.Fatal("Error executing command: porta seriale non trovata")
 	}
