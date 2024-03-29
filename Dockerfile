@@ -19,6 +19,6 @@ COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/scope-server-config.yam
 
 EXPOSE 8000
 
-USER scope
+USER root
 
 ENTRYPOINT [ "/scoperunner-server" ]
