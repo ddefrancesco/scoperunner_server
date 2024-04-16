@@ -1,2 +1,3 @@
 environments:
     fakescope: false
+serialport: "/dev/cu.usbserial-0001"

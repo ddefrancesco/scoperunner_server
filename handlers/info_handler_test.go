@@ -39,7 +39,7 @@ func TestInfoCommandHandlerParseRequestParams(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	req := httptest.NewRequest(http.MethodGet, "/info/altitude", nil)
+	req := httptest.NewRequest(http.MethodGet, "/info", nil)
 	req = mux.SetURLVars(req, map[string]string{"infos": "altitude,azimuth,declination"})
 	vars := mux.Vars(req)
 	var infoParam = vars["infos"]

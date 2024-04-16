@@ -42,5 +42,6 @@ require (
 	github.com/creack/goselect v0.1.2 // indirect
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.8.4
+	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
 	golang.org/x/sys v0.15.0 // indirect
 )

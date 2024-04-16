@@ -11,6 +11,7 @@ func InitConfig() error {
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("..")
+	viper.AddConfigPath("/opt/scope")
 	err := viper.ReadInConfig()
 	if err != nil {
 		fmt.Println("error reading in config: ", err)
