@@ -114,8 +114,8 @@ func main() {
 		fmt.Println("DCD line is set")
 	}
 	// Send the string "10,20,30\n\r" to the serial port
-
-	n, err := port.Write([]byte(":GC#"))
+	cmd := initializatitionSequence(prepareSetDateCommand(), prepareSetTimeCommand())
+	n, err := port.Write([]byte(cmd))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -125,7 +125,7 @@ func main() {
 
 	// Read and print the response
 
-	buff := make([]byte, 6)
+	buff := make([]byte, 128)
 	port.ResetInputBuffer()
 	port.SetReadTimeout(time.Millisecond * 1000)
 
@@ -155,4 +155,47 @@ func main() {
 
 	}
 
+}
+
+func prepareSetAltitudeCommand(altitude string) string {
+	return ":SA" + altitude + "#"
+}
+func prepareSetDateCommand() string {
+	layout := "01/02/06#"
+	date := time.Now().Format(layout)
+	return ":SC" + date + "#"
+}
+
+func prepareSetTimeCommand() string {
+	layout := "03:04:05#"
+	t := time.Now().Format(layout)
+	return ":SL" + t + "#"
+}
+
+func prepareSetMagnitudeCommand(magnitude string) string {
+	return ":SM" + magnitude + "#"
+}
+
+func prepareSetObjectSelectionCommand(object string) string {
+	return ":Sy" + object + "#"
+}
+
+func prepareSetObjectAzimuthCommand(azimuth string) string {
+	return ":Sz" + azimuth + "#"
+}
+
+func prepareSetSlewRateCommand(rate string) string {
+	return ":SR" + rate + "#"
+}
+
+func prepareSetCurrentSiteLongCommand(longitude string) string {
+	return ":Sg" + longitude + "#"
+}
+
+func prepareSetCurrentSiteLatCommand(latitude string) string {
+	return ":Sts" + latitude + "#"
+}
+
+func initializatitionSequence(cmds ...string) string {
+	return strings.Join(cmds, "")
 }
