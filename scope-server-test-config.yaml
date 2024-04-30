@@ -1,5 +1,5 @@
 environments:
-  fakescope: false
+  fakescope: true
 serialport: "/dev/cu.usbserial-0001"
 geocoding:
   url: "https://geocoding.openapi.it/geocode"

@@ -35,7 +35,7 @@ func TestInfoCommandHandler(t *testing.T) {
 }
 
 func TestInfoCommandHandlerParseRequestParams(t *testing.T) {
-	err := configuration.InitConfig()
+	err := configuration.InitTestConfig()
 	if err != nil {
 		panic(err)
 	}
