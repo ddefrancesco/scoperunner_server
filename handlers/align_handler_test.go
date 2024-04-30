@@ -13,7 +13,7 @@ import (
 )
 
 func TestAlignCommandHandler(t *testing.T) {
-	err := configuration.InitConfig()
+	err := configuration.InitTestConfig()
 	if err != nil {
 		panic(err)
 	}
