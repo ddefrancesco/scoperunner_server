@@ -239,7 +239,7 @@ func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 
 		sr.Response = append(sr.Response, []byte("1")...)
 
-	case strings.Contains(scopecmd, "ACK"):
+	case strings.Contains(scopecmd, "ACK\x06"):
 		sr.Response = []byte("A") //A,L,P,D
 	case strings.Contains(scopecmd, ":GA#"):
 		//sDD*MM’SS# Altitude

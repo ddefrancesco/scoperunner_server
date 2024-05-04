@@ -10,10 +10,11 @@ import (
 )
 
 func TestAckCommandHandler0(t *testing.T) {
-	err := configuration.InitConfig()
+	err := configuration.InitTestConfig()
 	if err != nil {
 		panic(err)
 	}
+
 	req := httptest.NewRequest(http.MethodGet, "/ack", nil)
 	w := httptest.NewRecorder()
 	AckCommandHandler(w, req)
