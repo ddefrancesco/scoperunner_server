@@ -77,7 +77,7 @@ func (s *InitializeRequest) SetDateCommand() string {
 }
 
 func (s *InitializeRequest) SetTimeCommand() string {
-	layout := "03:04:05#"
+	layout := "15:04:05#"
 	initTime := time.Now().Format(layout)
 	cmd := ":SL" + initTime
 	return cmd
