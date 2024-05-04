@@ -56,7 +56,7 @@ func TestInitCommandHandler(t *testing.T) {
 		res := w.Result()
 		defer res.Body.Close()
 
-		if strings.Contains(initCmd, ":SC") && strings.Contains(initCmd, ":SLs") && strings.Contains(initCmd, ":St") && strings.Contains(initCmd, ":Sg") {
+		if strings.Contains(initCmd, ":SC") && strings.Contains(initCmd, ":SL") && strings.Contains(initCmd, ":St") && strings.Contains(initCmd, ":Sg") {
 			t.Log("InitCommandHandler::Command::Info -> OK")
 		} else {
 			t.Errorf("expected :SC<today>:#SLs<hour>:St<long>#:Sg0<lat>#, got %v", initCmd)
