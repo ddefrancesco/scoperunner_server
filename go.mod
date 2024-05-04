@@ -25,7 +25,7 @@ require (
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/objx v0.5.0 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/vektah/gqlparser/v2 v2.5.6 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
@@ -40,8 +40,8 @@ require (
 require (
 	dagger.io/dagger v0.9.5
 	github.com/creack/goselect v0.1.2 // indirect
-	github.com/ddefrancesco/go-dms v1.0.1
+	github.com/ddefrancesco/go-dms v1.0.2
 	github.com/spf13/viper v1.18.2
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	golang.org/x/sys v0.15.0 // indirect
 )
