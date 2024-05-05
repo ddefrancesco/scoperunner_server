@@ -64,6 +64,7 @@ func settingsDictionary() map[string]string {
 	m["tracking_rate"] = "ST"
 	m["max_slew_rate"] = "Sw"
 	m["target_azimuth"] = "Sz"
+	m["h12_h24_toggle"] = "H"
 
 	return m
 }
