@@ -376,6 +376,58 @@ func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 	case strings.Contains(scopecmd, ":GZ#"):
 		//DDD*MM#T or DDD*MM’SS# Telescope Azimuth
 		sr.Response = []byte("000.00#0")
+	case strings.Contains(scopecmd, ":Mn"):
+		//Move Telescope North at current slew rate
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing North...")...)
+	case strings.Contains(scopecmd, ":Ms"):
+		//Move Telescope South at current slew rate
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing South...")...)
+	case strings.Contains(scopecmd, ":Me"):
+		//Move Telescope East at current slew rate
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing East...")...)
+	case strings.Contains(scopecmd, ":Mw"):
+		//Move Telescope West at current slew rate
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing West...")...)
+
+	case strings.Contains(scopecmd, ":Mgn1000"):
+		//Move Telescope West at current slew rate for 1 second
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing North for 1 second...")...)
+	case strings.Contains(scopecmd, ":Mgs1000"):
+		//Move Telescope West at current slew rate for 1 second
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing South for 1 second...")...)
+	case strings.Contains(scopecmd, ":Mge1000"):
+		//Move Telescope West at current slew rate for 1 second
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing Eest for 1 second...")...)
+	case strings.Contains(scopecmd, ":Mgw1000"):
+		//Move Telescope West at current slew rate
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing West for 1 second...")...)
+
+	case strings.Contains(scopecmd, ":MA"):
+		//Move Telescope North at current slew rate
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing @ target Alt and Az...")...)
+	case strings.Contains(scopecmd, ":MS"):
+		//Move Telescope South at current slew rate
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing @ target object...")...)
 
 	default:
 		sr.Response = []byte("Command Accepted")

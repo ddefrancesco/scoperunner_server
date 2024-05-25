@@ -41,6 +41,7 @@ require (
 	dagger.io/dagger v0.9.5
 	github.com/creack/goselect v0.1.2 // indirect
 	github.com/ddefrancesco/go-dms v1.0.2
+	github.com/gocarina/gocsv v0.0.0-20231116093920-b87c2d0e983a
 	github.com/spf13/viper v1.18.2
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/sys v0.15.0 // indirect
