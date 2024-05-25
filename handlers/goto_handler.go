@@ -11,8 +11,8 @@ import (
 	scopeparser "github.com/ddefrancesco/scoperunner_server/scopeparser"
 )
 
-func MoveCommandHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("MoveCommandHandler::Init -> eseguito")
+func GotoCommandHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("GotoCommandHandler::Init -> eseguito")
 	// vars := mux.Vars(r)
 	//amode := vars["mode"]
 
@@ -42,14 +42,14 @@ func MoveCommandHandler(w http.ResponseWriter, r *http.Request) {
 	var scopeResponseArray []interfaces.ETXResponse
 	for k, v := range ac {
 		command_string := ":" + k + v + "#"
-		log.Printf("MoveCommandHandler::Command::Info -> %s ###", command_string)
+		log.Printf("GotoCommandHandler::Command::Info -> %s ###", command_string)
 		scopeResp := serialDevice.ExecCommand(command_string)
 		if scopeResp.Err != nil {
 			log.Fatal("Error executing command: porta seriale non trovata")
 		}
 		scopeResponseArray = append(scopeResponseArray, scopeResp)
 	}
-	log.Println("MoveCommandHandler::End -> eseguito")
+	log.Println("GotoCommandHandler::End -> eseguito")
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusAccepted)

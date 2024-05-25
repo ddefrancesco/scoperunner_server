@@ -1,5 +1,9 @@
 package scopeparser
 
+import "errors"
+
+var ErrUnknownMoveCommand = errors.New("Unknown Move/Halt Command")
+
 type MoveRequest struct {
 	Request map[string]string
 }
@@ -26,7 +30,7 @@ func (s *MoveRequest) ParseMap() (map[string]string, error) {
 
 		} else {
 
-			return nil, ErrUnknownInfoCommand
+			return nil, ErrUnknownMoveCommand
 		}
 	}
 

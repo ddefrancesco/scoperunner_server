@@ -3,3 +3,4 @@
 coverage.out
 build/
 .vscode/
+*.numbers

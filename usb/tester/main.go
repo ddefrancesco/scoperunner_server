@@ -114,7 +114,8 @@ func main() {
 		fmt.Println("DCD line is set")
 	}
 	// Send the string "10,20,30\n\r" to the serial port
-	cmd := initializatitionSequence(prepareSetDateCommand(), prepareSetTimeCommand())
+	//cmd := initializatitionSequence(prepareSetDateCommand(), prepareSetTimeCommand())
+	cmd := ":Q#"
 	n, err := port.Write([]byte(cmd))
 	if err != nil {
 		log.Fatal(err)

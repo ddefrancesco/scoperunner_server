@@ -1,0 +1,3 @@
+Name;Type;RA;Dec;Const;MajAx;MinAx;PosAng;B-Mag;V-Mag;J-Mag;H-Mag;K-Mag;SurfBr;Hubble;Pax;Pm-RA;Pm-Dec;RadVel;Redshift;Cstar U-Mag;Cstar B-Mag;Cstar V-Mag;M;NGC;IC;Cstar Names;Identifiers;Common names;NED notes;OpenNGC notes;Sources
+IC0001;**;00:08:27.05;+27:43:03.6;Peg;;;;;;;;;;;;;;;;;;;;;;;;;;;Type:1|RA:1|Dec:1|Const:99
+IC0002;G;00:11:00.88;-12:49:22.3;Cet;0.98;0.32;142;15.46;;12.26;11.48;11.17;23.45;Sb;;;;6775;0.022860;;;;;;;;2MASX J00110081-1249206,IRAS 00084-1306,MCG -02-01-031,PGC 000778;;;;Type:1|RA:1|Dec:1|Const:99|MajAx:3|MinAx:3|PosAng:3|B-Mag:3|J-Mag:2|H-Mag:2|K-Mag:2|SurfBr:3|Hubble:3|RadVel:2|Redshift:2
