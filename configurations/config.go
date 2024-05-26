@@ -2,6 +2,7 @@ package configurations
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/spf13/viper"
 )
@@ -32,4 +33,13 @@ func InitTestConfig() error {
 		return err
 	}
 	return nil
+}
+
+func InitEnvConfig() error {
+	viper.AutomaticEnv()
+	viper.SetEnvPrefix("SCOPE")
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+
+	return nil
+
 }
