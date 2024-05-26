@@ -15,6 +15,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	log.Println("Server::InitConfig -> eseguito")
+	err = configuration.InitEnvConfig()
+	if err != nil {
+		panic(err)
+	}
+	log.Println("Server::InitEnvConfig -> eseguito")
 	log.Println("Server::Init -> eseguito")
 	r := mux.NewRouter()
 	// Routes consist of a path and a handler function.

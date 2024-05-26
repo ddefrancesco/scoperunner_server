@@ -64,5 +64,6 @@ func GetScopeClient() interfaces.SerialClient {
 		serialDevice = etx
 	}
 	log.Println("GetScopeClient::Init -> eseguito")
+	log.Println("GetScopeClient::Init -> fakescope: ", viper.GetBool("environments.fakescope"))
 	return serialDevice
 }
