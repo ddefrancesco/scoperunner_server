@@ -16,14 +16,14 @@ func AlignCommandHandler(w http.ResponseWriter, r *http.Request) {
 	// vars := mux.Vars(r)
 	// amode := vars["mode"]
 
-	var amode commons.ScopeRequest
+	var amode commons.ScopeSetRequest
 	err := json.NewDecoder(r.Body).Decode(&amode)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	alignment := scopeparser.NewAlignment(setMode(amode.Body))
+	alignment := scopeparser.NewAlignment(setMode(amode.Body["mode"]))
 
 	ac, err := alignment.ParseMap()
 	if err != nil {

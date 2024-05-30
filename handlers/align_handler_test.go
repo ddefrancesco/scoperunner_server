@@ -17,7 +17,7 @@ func TestAlignCommandHandler(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	body := `{"body": "altaz"}`
+	body := `{"body": {"mode": "altaz"}}`
 	req := httptest.NewRequest(http.MethodPost, "/align", strings.NewReader(body))
 	w := httptest.NewRecorder()
 	AlignCommandHandler(w, req)
