@@ -3,6 +3,9 @@ package commons
 type RequestAddress struct {
 	Address string `json:"address"`
 }
+type RequestGoto struct {
+	Goto string `json:"goto"`
+}
 type ScopeRequest struct {
 	Body string `json:"body"`
 }

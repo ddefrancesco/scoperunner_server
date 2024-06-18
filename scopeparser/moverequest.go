@@ -9,10 +9,10 @@ type MoveRequest struct {
 }
 
 func NewMoveRequest(m map[string]string) *MoveRequest {
-	haltRequest := &MoveRequest{
+	request := &MoveRequest{
 		Request: m,
 	}
-	return haltRequest
+	return request
 }
 
 type ScopeMoveCmd struct {

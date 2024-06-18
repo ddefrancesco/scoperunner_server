@@ -9,4 +9,4 @@ geocoding:
   token: "662401dfa874ef890f0df052"
 openngc:
   csv:
-    path: "./openngc/csv/NGC.csv"
+    path: "../openngc/csv/NGC.csv"

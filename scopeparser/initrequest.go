@@ -58,7 +58,7 @@ func NewInitRequest(m commons.RequestAddress) *InitializeRequest {
 func (s *InitializeRequest) initializationDictionary() map[string]string {
 
 	m := make(map[string]string)
-
+	m["toggle_precision"] = ":U#"
 	m["current_date"] = s.SetDateCommand()
 	m["utc_offset"] = "SG"
 	m["dst"] = "SH"
@@ -110,10 +110,14 @@ func (s *InitializeRequest) SetLongitudeCommand(address geocoding.Address) (stri
 // 	return cmd
 // }
 
+func (s *InitializeRequest) TogglePrecisionCommand() string {
+	return s.initializationDictionary()["toggle_precision"]
+}
+
 func (s *InitializeRequest) SetInitializeCommand() (string, error) {
 	addrRequest := s.Request
 	address := geocoding.Address{Location: addrRequest.Address}
 	lat, _ := s.SetLatitudeCommand(address)
 	long, _ := s.SetLongitudeCommand(address)
-	return s.SetDateCommand() + s.SetTimeCommand() + lat + long, nil
+	return s.TogglePrecisionCommand() + s.SetDateCommand() + s.SetTimeCommand() + lat + long, nil
 }

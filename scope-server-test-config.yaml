@@ -7,3 +7,6 @@ geocoding:
     production: "nlwvf0vea4kdspgwquqneenegpdqeutm"
     sandbox:
   token: "662401dfa874ef890f0df052"
+openngc:
+  csv:
+    path: "../openngc/csv/NGC.csv"

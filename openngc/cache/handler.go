@@ -56,8 +56,7 @@ type NGCCacheHandler interface {
 }
 
 func NewNGCCatalog() NGCCatalog {
-
-	csvFilePath := viper.GetString("openngc.file.path")
+	csvFilePath := viper.GetString("openngc.csv.path")
 	catalog := ReadCsv(csvFilePath)
 	err := catalog.SetNGCCatalog(catalog)
 	if err != nil {
