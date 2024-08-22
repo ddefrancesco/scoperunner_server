@@ -62,12 +62,15 @@ func parseResponse(address Address, body []byte, geoCache *cache.Cache[string, *
 	long := element.(map[string]interface{})["longitude"].(float64)
 	fmt.Println(long)
 
-	dms := convert2DM(lat, long)
+	dms, err := convert2DM(lat, long)
+	if err != nil {
+		return nil, err
+	}
 	geoCache.Set(address.Location, dms)
 	return dms, nil
 }
 
-func convert2DM(lat float64, long float64) *AutostarLatLong {
+func convert2DM(lat float64, long float64) (*AutostarLatLong, error) {
 
 	dmsCoordinate, err := dms.NewDMS(dms.DecimalDegrees{
 		Latitude:  lat,
@@ -75,6 +78,7 @@ func convert2DM(lat float64, long float64) *AutostarLatLong {
 	})
 	if err != nil {
 		log.Fatal(err)
+		return nil, err
 	}
 	fmt.Printf("DMS coordinates: %+v\n", dmsCoordinate.String())
 	dmsLat := dmsCoordinate.AutostarLatitude(dmsCoordinate.Latitude)
@@ -82,5 +86,5 @@ func convert2DM(lat float64, long float64) *AutostarLatLong {
 	dmsLong := dmsCoordinate.AutostarLongitude(dmsCoordinate.Longitude)
 	fmt.Printf("DMS Long. %v\n", dmsLong)
 
-	return &AutostarLatLong{AutostarLat: dmsLat, AutostarLong: dmsLong}
+	return &AutostarLatLong{AutostarLat: dmsLat, AutostarLong: dmsLong}, nil
 }

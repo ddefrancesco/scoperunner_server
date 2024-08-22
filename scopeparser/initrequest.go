@@ -78,7 +78,9 @@ func (s *InitializeRequest) SetDateCommand() string {
 
 func (s *InitializeRequest) SetTimeCommand() string {
 	layout := "15:04:05#"
-	initTime := time.Now().Format(layout)
+	timeZone := "Europe/Rome"
+	loc, _ := time.LoadLocation(timeZone)
+	initTime := time.Now().In(loc).Format(layout)
 	cmd := ":SL" + initTime
 	return cmd
 }

@@ -1,6 +1,7 @@
 environments:
   fakescope: true
 serialport: "/dev/cu.usbserial-0001"
+timezone: "Europe/Rome"
 geocoding:
   url: "https://geocoding.openapi.it/geocode"
   api_key: 

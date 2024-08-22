@@ -20,7 +20,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/move", bytes.NewBufferString(reqBody))
 		w := httptest.NewRecorder()
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
@@ -35,7 +35,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/move", bytes.NewBufferString(reqBody))
 		w := httptest.NewRecorder()
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
@@ -50,7 +50,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/move", bytes.NewBufferString(reqBody))
 		w := httptest.NewRecorder()
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
@@ -65,7 +65,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/move", bytes.NewBufferString(reqBody))
 		w := httptest.NewRecorder()
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
@@ -79,7 +79,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/move", bytes.NewBufferString(reqBody))
 		w := httptest.NewRecorder()
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
@@ -94,7 +94,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/move", bytes.NewBufferString(reqBody))
 		w := httptest.NewRecorder()
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
@@ -109,7 +109,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/move", bytes.NewBufferString(reqBody))
 		w := httptest.NewRecorder()
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
@@ -124,7 +124,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		req := httptest.NewRequest(http.MethodPost, "/move", bytes.NewBufferString(reqBody))
 		w := httptest.NewRecorder()
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
@@ -166,7 +166,7 @@ func TestMoveCommandHandler(t *testing.T) {
 		// }
 		//handler.SetScopeClient(serialDeviceMock)
 
-		GotoCommandHandler(w, req)
+		MoveCommandHandler(w, req)
 
 		res := w.Result()
 		defer res.Body.Close()
