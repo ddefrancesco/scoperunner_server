@@ -17,7 +17,7 @@ func TestReadCsv(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			name: "test",
+			name: "read test",
 			args: args{
 				csvFilePath: "../csv/test/valid.csv",
 			},

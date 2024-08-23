@@ -42,3 +42,43 @@ func TestInitEnvConfigBool(t *testing.T) {
 		t.Errorf("Expected TEST_BOOL_ENV_VARto be 'false', but got '%t'", value)
 	}
 }
+
+func TestInitTestConfig(t *testing.T) {
+	tests := []struct {
+		name    string
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+		{
+			name:    "test config test ok",
+			wantErr: false,
+		},
+		// },
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := InitTestConfig(); (err != nil) != tt.wantErr {
+				t.Errorf("InitTestConfig() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestInitConfig(t *testing.T) {
+	tests := []struct {
+		name    string
+		wantErr bool
+	}{
+		{
+			name:    "config test ok",
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := InitConfig(); (err != nil) != tt.wantErr {
+				t.Errorf("InitConfig() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}

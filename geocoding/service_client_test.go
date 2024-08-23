@@ -46,6 +46,16 @@ func TestGetAutostarLocation(t *testing.T) {
 			want:    &AutostarLatLong{AutostarLat: "41*49", AutostarLong: "012*26"},
 			wantErr: false,
 		},
+
+		// {
+		// 	name: "test ko",
+		// 	args: args{
+		// 		address:  Address{Location: "a"},
+		// 		geoCache: gcache,
+		// 	},
+		// 	want:    &AutostarLatLong{AutostarLat: "91*49", AutostarLong: "181*26"},
+		// 	wantErr: true,
+		// },
 	}
 	for i, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

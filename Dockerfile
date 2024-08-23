@@ -20,6 +20,9 @@ COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/scoperunner-server /sco
 COPY --chown=1001:1001 --from=builder /opt/scope/ /opt/scope
 COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/scope-server-config.yaml /opt/scope/scope-server-config.yaml
 
+RUN apk add --no-cache tzdata
+ENV TZ=Europe/Rome
+
 ENV SCOPE_SERIALPORT=/dev/ttyUSB0
 ENV SCOPE_ENVIRONMENTS_FAKESCOPE=false
 

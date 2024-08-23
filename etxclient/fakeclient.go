@@ -426,8 +426,9 @@ func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 	case strings.Contains(scopecmd, ":MS"):
 		//Move Telescope South at current slew rate
 		// Returns:
-		// Nothing
-		sr.Response = append(sr.Response, []byte(" slewing @ target object...")...)
+		// ok --> 0,
+		// err --> 1string# ,	2string#
+		sr.Response = append(sr.Response, []byte("0")...)
 
 	default:
 		sr.Response = []byte("Command Accepted")
