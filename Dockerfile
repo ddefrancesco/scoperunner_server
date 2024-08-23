@@ -19,12 +19,14 @@ COPY --chown=1001:1001 --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc
 COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/scoperunner-server /scoperunner-server
 COPY --chown=1001:1001 --from=builder /opt/scope/ /opt/scope
 COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/scope-server-config.yaml /opt/scope/scope-server-config.yaml
+COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/openngc/csv/NGC.csv /opt/scope/NGC.csv
 
 RUN apk add --no-cache tzdata
 ENV TZ=Europe/Rome
 
 ENV SCOPE_SERIALPORT=/dev/ttyUSB0
 ENV SCOPE_ENVIRONMENTS_FAKESCOPE=false
+ENV SCOPE_OPENNGC_CSV_PATH=/opt/scope/NGC.csv
 
 EXPOSE 8000
 
