@@ -29,7 +29,7 @@ func InitCommandHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("InitCommandHandler::Address::Info -> %v ###", addressJson)
 
 	initRequest := scopeparser.NewInitRequest(addressJson)
-	initCmd, err := initRequest.SetInitializeCommand()
+	initCmd, err := initRequest.GetInitializeCommand()
 	// ac, err := initRequest.ParseMap()
 	if err != nil {
 		appErr := &commons.ScopeErr{
