@@ -15,3 +15,6 @@ opendatasoft:
   url: "https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets"
   messier-dataset: "ngc-ic-messier-catalog@datastro"
   hyg-dataset: "hyg-stellar-database@datastro"
+hipparcos:
+  csv:
+    path: "../hipparcos/hipparcos2.csv"

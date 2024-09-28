@@ -2,7 +2,9 @@ package main
 
 import (
 	"log"
+	"net"
 	"net/http"
+	"time"
 
 	"github.com/ddefrancesco/scoperunner_server/handlers"
 	"github.com/gorilla/mux"
@@ -11,6 +13,12 @@ import (
 )
 
 func main() {
+	log.Println("Server::Init -> inizializzazione")
+	log.Println("Server::CheckInternetConnection -> eseguito")
+	if !CheckInternetConnection() {
+		log.Println("Server::CheckInternetConnection -> connessione internet non disponibile")
+		return
+	}
 	err := configuration.InitConfig()
 	if err != nil {
 		panic(err)
@@ -40,4 +48,10 @@ func main() {
 
 	// Bind to a port and pass our router in
 	log.Fatal(http.ListenAndServe(":8000", r))
+}
+
+func CheckInternetConnection() bool {
+	timeout := 5 * time.Second
+	_, err := net.DialTimeout("tcp", "8.8.8.8:53", timeout)
+	return err == nil
 }

@@ -10,11 +10,18 @@ func RequestParamsToInfoArray(params string) ([]scopeparser.Info, error) {
 	pArray := strings.Split(params, ",")
 	infoMap := InitInfoMap()
 	var infoArray []scopeparser.Info
-	for _, p := range pArray {
-		if _, ok := infoMap[p]; ok {
-			infoArray = append(infoArray, infoMap[p])
-		} else {
-			return nil, scopeparser.ErrUnknownInfoCommand
+	if pArray[0] == "all" {
+		for _, info := range infoMap {
+			infoArray = append(infoArray, info)
+		}
+
+	} else {
+		for _, p := range pArray {
+			if _, ok := infoMap[p]; ok {
+				infoArray = append(infoArray, infoMap[p])
+			} else {
+				return nil, scopeparser.ErrUnknownInfoCommand
+			}
 		}
 	}
 

@@ -105,12 +105,12 @@ func (s *InitializeRequest) SetLongitudeCommand(address geocoding.Address) (stri
 	return cmd, nil
 }
 
-// func (s *InitializeRequest) SetUTCCommand() string {
-// 	layout := "s03:04:05#"
-// 	initTime := time.Now().Format(layout)
-// 	cmd := "SG" + initTime
-// 	return cmd
-// }
+func (s *InitializeRequest) SetUTCCommand() string {
+	layout := "s03:04:05#"
+	initTime := time.Now().Format(layout)
+	cmd := "SG" + initTime
+	return cmd
+}
 
 func (s *InitializeRequest) TogglePrecisionCommand() string {
 	return s.initializationDictionary()["toggle_precision"]
@@ -121,5 +121,11 @@ func (s *InitializeRequest) SetInitializeCommand() (string, error) {
 	address := geocoding.Address{Location: addrRequest.Address}
 	lat, _ := s.SetLatitudeCommand(address)
 	long, _ := s.SetLongitudeCommand(address)
+
 	return s.TogglePrecisionCommand() + s.SetDateCommand() + s.SetTimeCommand() + lat + long, nil
+}
+
+func (s *InitializeRequest) SetCurrentDateCommand() string {
+	return s.initializationDictionary()["current_date"]
+
 }
