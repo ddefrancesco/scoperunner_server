@@ -86,7 +86,8 @@ func (ec *EtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 
 func (ec *EtxClient) ConnectTTY(scopecmd string) (bool, interfaces.ETXResponse) {
 	log.Println("EtxClient::ConnectTTY -> " + scopecmd)
-	serialport := viper.GetString("serialport")
+	serialport := viper.GetString("serialport.name")
+	timeout := viper.GetDuration("serialport.timeout") * time.Millisecond
 	var response interfaces.ETXResponse
 	var accumulator []byte
 	port, err := ec.Connect(serialport)
@@ -108,7 +109,7 @@ func (ec *EtxClient) ConnectTTY(scopecmd string) (bool, interfaces.ETXResponse) 
 	log.Printf("EtxClient::ConnectTTY -> Sent %v bytes\n", n)
 	buff := make([]byte, 128)
 	port.ResetInputBuffer()
-	port.SetReadTimeout(time.Millisecond * 500)
+	port.SetReadTimeout(timeout)
 
 	for {
 		n, err := port.Read(buff)

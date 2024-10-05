@@ -39,7 +39,7 @@ func TestInitEnvConfigBool(t *testing.T) {
 	// Check if the environment variable was loaded correctly
 	value := viper.GetBool("test.bool.env.var")
 	if value != false {
-		t.Errorf("Expected TEST_BOOL_ENV_VARto be 'false', but got '%t'", value)
+		t.Errorf("Expected TEST_BOOL_ENV_VAR to be 'false', but got '%t'", value)
 	}
 }
 

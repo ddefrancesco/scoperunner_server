@@ -1,6 +1,8 @@
 environments:
   fakescope: true
-serialport: "/dev/cu.usbserial-0001"
+serialport: 
+  name: "/dev/cu.usbserial-0001"
+  timeout: 500
 timezone: "Europe/Rome"
 utc: "-01.0"
 geocoding:
