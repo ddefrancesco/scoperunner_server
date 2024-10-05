@@ -5,8 +5,8 @@ import (
 	"io"
 	"os"
 
+	"github.com/ddefrancesco/scoperunner_server/cache"
 	"github.com/ddefrancesco/scoperunner_server/errors"
-	"github.com/ddefrancesco/scoperunner_server/geocoding/cache"
 	"github.com/gocarina/gocsv"
 	"github.com/spf13/viper"
 )

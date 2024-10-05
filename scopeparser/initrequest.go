@@ -3,8 +3,8 @@ package scopeparser
 import (
 	"time"
 
+	"github.com/ddefrancesco/scoperunner_server/cache"
 	"github.com/ddefrancesco/scoperunner_server/geocoding"
-	"github.com/ddefrancesco/scoperunner_server/geocoding/cache"
 	"github.com/ddefrancesco/scoperunner_server/models/commons"
 	"github.com/spf13/viper"
 )
@@ -108,7 +108,7 @@ func (s *InitializeRequest) SetLongitudeCommand(address geocoding.Address) (stri
 
 func (s *InitializeRequest) GetUTCCommand() string {
 
-	initUTC := viper.GetString("utc")
+	initUTC := viper.GetString("utc-offset")
 	cmd := ":SG" + initUTC + "#"
 	return cmd
 }

@@ -108,7 +108,7 @@ func (ec *EtxClient) ConnectTTY(scopecmd string) (bool, interfaces.ETXResponse) 
 	log.Printf("EtxClient::ConnectTTY -> Sent %v bytes\n", n)
 	buff := make([]byte, 128)
 	port.ResetInputBuffer()
-	port.SetReadTimeout(time.Millisecond * 1000)
+	port.SetReadTimeout(time.Millisecond * 500)
 
 	for {
 		n, err := port.Read(buff)

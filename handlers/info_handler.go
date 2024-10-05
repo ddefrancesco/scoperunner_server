@@ -19,7 +19,7 @@ func InfoCommandHandler(w http.ResponseWriter, r *http.Request) {
 	var infoParam = vars["infos"]
 	log.Printf("InfoCommandHandler::Command::PathParam -> %s ###", infoParam)
 	//GET Requests
-	tMap, err := converter.RequestParamsToInfoArray(infoParam)
+	tArray, err := converter.RequestParamsToInfoArray(infoParam)
 	if err != nil {
 		appErr := &commons.ScopeErr{
 			Err:            http.StatusBadRequest,
@@ -32,11 +32,13 @@ func InfoCommandHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var infoCommandArray []scopeparser.InfoCommand
 	var scopeResponses []interfaces.ETXResponse
-	for _, v := range tMap {
+	for _, v := range tArray {
 		infoCommand := *scopeparser.NewInfoCommand(v)
 		infoCommandArray = append(infoCommandArray, infoCommand)
 	}
 	serialDevice := handler.GetScopeClient()
+	// infoCommandAggregate := *scopeparser.NewEmptyInfoCommand()
+	// infoCommandAggregate.Info = "All"
 	for _, v := range infoCommandArray {
 
 		ic, err := v.ParseMap()
@@ -52,12 +54,14 @@ func InfoCommandHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		//infoCommandAggregate.Value += ic
 		scopeResponse := serialDevice.ExecCommand(v.StringValue())
 		if scopeResponse.Err != nil {
 			log.Fatal("Error executing command: porta seriale non trovata")
 		}
 		log.Printf("InfoCommandHandler::Response %s, \n\t  %s", scopeResponse.Response, scopeResponse.ExecCmd)
 		scopeResponses = append(scopeResponses, scopeResponse)
+
 	}
 
 	log.Println("InfoCommandHandler::End -> eseguito")
