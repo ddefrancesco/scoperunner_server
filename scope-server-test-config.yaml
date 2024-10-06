@@ -4,7 +4,7 @@ serialport:
   name: "/dev/cu.usbserial-0001"
   timeout: 500
 timezone: "Europe/Rome"
-utc: "-01.0"
+utc-offset: "-01.0"
 geocoding:
   url: "https://geocoding.openapi.it/geocode"
   api_key: 
