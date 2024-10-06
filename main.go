@@ -4,15 +4,23 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/ddefrancesco/scoperunner_server/handlers"
+	"github.com/dotse/go-health/client"
 	"github.com/gorilla/mux"
 
 	configuration "github.com/ddefrancesco/scoperunner_server/configurations"
 )
 
 func main() {
+	//check if healthcheck
+	log.Println("Server::Health -> inizializzazione")
+	if len(os.Args) >= 2 && os.Args[1] == "healthcheck" {
+		client.CheckHealthCommand()
+		log.Println("Server::CheckHealthCommand -> eseguito")
+	}
 	log.Println("Server::Init -> inizializzazione")
 	log.Println("Server::CheckInternetConnection -> eseguito")
 	if !CheckInternetConnection() {
