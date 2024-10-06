@@ -31,6 +31,10 @@ func main() {
 	log.Println("Server::InitEnvConfig -> eseguito")
 	log.Println("Server::Init -> eseguito")
 	r := mux.NewRouter()
+	health := mux.NewRouter()
+
+	health.HandleFunc("/health", handlers.HealthCommandHandler).Methods("GET")
+	log.Println("Server::NewRoute@ port 9999 /health -> registrata")
 	// Routes consist of a path and a handler function.
 	r.HandleFunc("/align", handlers.AlignCommandHandler).Methods("POST")
 	log.Println("Server::NewRoute /align -> registrata")
@@ -46,8 +50,11 @@ func main() {
 	log.Println("Server::NewRoute /move -> registrata")
 	log.Println("Server::Bind a porta 8000 -> eseguito")
 
+	go http.ListenAndServe(":9999", health)
+	log.Println("Server::Bind a porta 9999 -> eseguito")
 	// Bind to a port and pass our router in
 	log.Fatal(http.ListenAndServe(":8000", r))
+
 }
 
 func CheckInternetConnection() bool {
