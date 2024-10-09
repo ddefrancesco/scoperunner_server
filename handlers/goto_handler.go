@@ -2,10 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
 
+	"github.com/ddefrancesco/scoperunner_server/errors"
 	"github.com/ddefrancesco/scoperunner_server/etxclient/interfaces"
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
 	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
@@ -30,19 +32,34 @@ func GotoCommandHandler(w http.ResponseWriter, r *http.Request) {
 
 	gotoJsonMap := settings.Body["body"]
 	gotoRequest := scopeparser.NewGotoRequest(gotoJsonMap)
-	gotoRADecCmd, err := gotoRequest.SetGotoRADecCommand()
-	// ac, err := initRequest.ParseMap()
-	if err != nil {
-		appErr := &commons.ScopeErr{
-			Err:            http.StatusBadRequest,
-			ErrDescription: "Error parsing command: Parametro non valida",
-			ScopeFunction:  "Initialize",
-			Cmd:            gotoRADecCmd,
-		}
-		handler.JSONError(w, appErr, http.StatusBadRequest)
-		return
-	}
 
+	gotoRADecCmd, err := gotoRequest.FindDeepSpaceObjectCommand()
+
+	log.Printf("GotoCommandHandler::Command::Info -> %s ###", gotoRADecCmd)
+	if err != nil {
+		switch e := err.(type) {
+		case *errors.ObjectNotFoundInCatalogError:
+			// Handle the specific error
+			log.Printf("Object not found in catalog: %s", e.Message)
+			//Ricerca oggetto stellare o pianeta
+
+			http.Error(w, fmt.Sprintf("Error: %s", e.Message), http.StatusNotFound)
+		default:
+			// Handle other types of errors
+			log.Printf("Unexpected error: %v", err)
+			appErr := &commons.ScopeErr{
+				Err:            http.StatusBadRequest,
+				ErrDescription: "Error parsing command: Parametro non valida",
+				ScopeFunction:  "Initialize",
+				Cmd:            gotoRADecCmd,
+			}
+			handler.JSONError(w, appErr, http.StatusBadRequest)
+			// You can send a generic error response to the client here
+			// For example:
+			// http.Error(w, "Internal server error", http.StatusInternalServerError)
+		}
+
+	}
 	// Send command to serial device
 	//handler := &handlers.Handler{}
 	// Get the scope client

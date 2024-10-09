@@ -1,7 +1,10 @@
 environments:
   fakescope: true
-serialport: "/dev/cu.usbserial-0001"
+serialport: 
+  name: "/dev/cu.usbserial-0001"
+  timeout: 500
 timezone: "Europe/Rome"
+utc-offset: "-01.0"
 geocoding:
   url: "https://geocoding.openapi.it/geocode"
   api_key: 

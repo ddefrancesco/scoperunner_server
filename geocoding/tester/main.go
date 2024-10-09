@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	dms "github.com/ddefrancesco/go-dms/dms"
+	dms "github.com/ddefrancesco/go-dms/v2/dms"
 )
 
 func main() {

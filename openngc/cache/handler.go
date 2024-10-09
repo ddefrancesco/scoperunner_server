@@ -2,11 +2,11 @@ package cache
 
 import (
 	"encoding/csv"
-	"fmt"
 	"io"
 	"os"
 
-	"github.com/ddefrancesco/scoperunner_server/geocoding/cache"
+	"github.com/ddefrancesco/scoperunner_server/cache"
+	"github.com/ddefrancesco/scoperunner_server/errors"
 	"github.com/gocarina/gocsv"
 	"github.com/spf13/viper"
 )
@@ -66,8 +66,7 @@ func NewNGCCatalog() NGCCatalog {
 }
 
 func (h *NGCCatalog) SetNGCCatalog(catalog NGCCatalog) error {
-	// configurations.InitConfig()
-	//
+
 	// Store catalog in cache
 	//
 
@@ -89,7 +88,7 @@ func (c NGCCatalog) FindNGCObject(name string) (*NGCRecord, error) {
 			return &obj, nil
 		}
 	}
-	return nil, fmt.Errorf("NGC object with Name %v not found", name)
+	return nil, errors.NewObjectNotFoundInCatalogError(name)
 }
 
 func ReadCsv(csvFilePath string) NGCCatalog {

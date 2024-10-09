@@ -1,7 +1,10 @@
 environments:
   fakescope: true
-serialport: "/dev/cu.usbserial-0001"
+serialport: 
+  name: "/dev/cu.usbserial-0001"
+  timeout: 500
 timezone: "Europe/Rome"
+utc-offset: "-01.0"
 geocoding:
   url: "https://geocoding.openapi.it/geocode"
   api_key: 
@@ -15,3 +18,6 @@ opendatasoft:
   url: "https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets"
   messier-dataset: "ngc-ic-messier-catalog@datastro"
   hyg-dataset: "hyg-stellar-database@datastro"
+hipparcos:
+  csv:
+    path: "../hipparcos/hipparcos2.csv"

@@ -7,7 +7,7 @@ import (
 type Info string
 type InfoCommandValue string
 
-var ErrUnknownInfoCommand = errors.New("Unknown Command")
+var ErrUnknownInfoCommand = errors.New("unknown command")
 
 const (
 	InfoAltitude          Info = "altitude"
@@ -75,6 +75,11 @@ type InfoCommand struct {
 	Info  Info
 	Value InfoCommandValue
 	Err   error
+}
+
+func NewEmptyInfoCommand() *InfoCommand {
+	infoCommand := &InfoCommand{}
+	return infoCommand
 }
 
 func NewInfoCommand(m Info) *InfoCommand {

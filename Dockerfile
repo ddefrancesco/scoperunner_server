@@ -22,6 +22,8 @@ COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/scope-server-config.yam
 COPY --chown=1001:1001 --from=builder /scoperunner-wkdir/openngc/csv/NGC.csv /opt/scope/NGC.csv
 
 RUN apk add --no-cache tzdata
+RUN apk add --no-cache curl
+
 ENV TZ=Europe/Rome
 
 ENV SCOPE_SERIALPORT=/dev/ttyUSB0
@@ -29,7 +31,9 @@ ENV SCOPE_ENVIRONMENTS_FAKESCOPE=false
 ENV SCOPE_OPENNGC_CSV_PATH=/opt/scope/NGC.csv
 
 EXPOSE 8000
+EXPOSE 9999
 
 USER root
 
+HEALTHCHECK --interval=10s --timeout=30s CMD ./scoperunner-server healthcheck
 ENTRYPOINT [ "/scoperunner-server" ]
