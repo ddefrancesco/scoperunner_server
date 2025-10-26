@@ -430,6 +430,27 @@ func (ec *FakeEtxClient) ExecCommand(scopecmd string) interfaces.ETXResponse {
 		// err --> 1string# ,	2string#
 		sr.Response = append(sr.Response, []byte("0")...)
 
+	case strings.Contains(scopecmd, ":hP"):
+		//Slew to Park Position
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" slewing @ parking position...")...)
+
+	case strings.Contains(scopecmd, ":hF"):
+		//Seeks the Home Position of the scope and sets/aligns
+		//the scope based on the encoder values stored in non-volatile memory
+		// Returns:
+		// Nothing
+		sr.Response = append(sr.Response, []byte(" seeking @ parking position...")...)
+
+	case strings.Contains(scopecmd, ":h?"):
+		//Query Home Status
+		// Returns:
+		// 0 Home Search Failed
+		// 1 Home Search Found
+		// 2 Home Search in Progress
+		sr.Response = append(sr.Response, []byte("1")...)
+
 	default:
 		sr.Response = []byte("Command Accepted")
 	}

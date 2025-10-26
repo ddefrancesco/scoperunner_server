@@ -56,7 +56,7 @@ func HealthCommandHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	resp, err := health.CheckHealthContext(req.Context())
+	resp, err := health.CheckHealth(req.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

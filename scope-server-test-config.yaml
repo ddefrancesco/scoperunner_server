@@ -8,9 +8,9 @@ utc-offset: "-01.0"
 geocoding:
   url: "https://geocoding.openapi.it/geocode"
   api_key: 
-    production: "nlwvf0vea4kdspgwquqneenegpdqeutm"
+    production: "hujgovjqrb5capyn4ihrfvupplbmxj08"
     sandbox:
-  token: "662401dfa874ef890f0df052"
+  token: "68e24742b455b3c8370ac1bf"
 openngc:
   csv:
     path: "../openngc/csv/NGC.csv"

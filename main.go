@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
 	"net/http"
@@ -8,7 +9,7 @@ import (
 	"time"
 
 	"github.com/ddefrancesco/scoperunner_server/handlers"
-	"github.com/dotse/go-health/client"
+	"github.com/dotse/go-health"
 	"github.com/gorilla/mux"
 
 	configuration "github.com/ddefrancesco/scoperunner_server/configurations"
@@ -18,8 +19,9 @@ func main() {
 	//check if healthcheck
 	log.Println("Server::Health -> inizializzazione")
 	if len(os.Args) >= 2 && os.Args[1] == "healthcheck" {
-		client.CheckHealthCommand()
-		log.Println("Server::CheckHealthCommand -> eseguito")
+		health.CheckHealth(context.Background())
+		//client.CheckHealthCommand()
+		log.Println("Server::CheckHealth() -> eseguito")
 	}
 	log.Println("Server::Init -> inizializzazione")
 	log.Println("Server::CheckInternetConnection -> eseguito")
@@ -42,7 +44,7 @@ func main() {
 	health := mux.NewRouter()
 
 	health.HandleFunc("/health", handlers.HealthCommandHandler).Methods("GET")
-	log.Println("Server::NewRoute@ port 9999 /health -> registrata")
+	log.Println("Server::NewRoute @ port 9999 /health -> registrata")
 	// Routes consist of a path and a handler function.
 	r.HandleFunc("/align", handlers.AlignCommandHandler).Methods("POST")
 	log.Println("Server::NewRoute /align -> registrata")
@@ -56,6 +58,8 @@ func main() {
 	log.Println("Server::NewRoute /init -> registrata")
 	r.HandleFunc("/move", handlers.GotoCommandHandler).Methods("POST")
 	log.Println("Server::NewRoute /move -> registrata")
+	r.HandleFunc("/park", handlers.ParkCommandHandler).Methods("POST")
+	log.Println("Server::NewRoute /park -> registrata")
 	log.Println("Server::Bind a porta 8000 -> eseguito")
 
 	go http.ListenAndServe(":9999", health)
@@ -69,4 +73,22 @@ func CheckInternetConnection() bool {
 	timeout := 5 * time.Second
 	_, err := net.DialTimeout("tcp", "8.8.8.8:53", timeout)
 	return err == nil
+}
+
+func CheckHealth(ctx context.Context) []health.Check {
+	c := health.Check{Status: health.StatusPass}
+
+	// usa il context per timeout/cancellazione
+	d := net.Dialer{}
+	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+
+	conn, err := d.DialContext(ctx, "tcp", "8.8.8.8:53")
+	if err != nil {
+		c.Status = health.StatusFail
+		c.Output = err.Error()
+		return []health.Check{c}
+	}
+	_ = conn.Close()
+	return []health.Check{c}
 }
