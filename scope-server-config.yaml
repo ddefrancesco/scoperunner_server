@@ -10,7 +10,7 @@ geocoding:
   api_key: 
     production: "hujgovjqrb5capyn4ihrfvupplbmxj08"
     sandbox:
-  token: "68e24742b455b3c8370ac1bf"
+  token: "690f8641b46ac4031800a577"
 openngc:
   csv:
     path: "./openngc/csv/NGC.csv"
