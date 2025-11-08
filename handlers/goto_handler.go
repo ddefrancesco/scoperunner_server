@@ -15,6 +15,9 @@ import (
 )
 
 func GotoCommandHandler(w http.ResponseWriter, r *http.Request) {
+	//c:= cache.New[string, interface{}]()
+	//offset, found := c.Get("scope_position")
+
 	log.Println("GotoCommandHandler::Init -> eseguito")
 
 	/** {
