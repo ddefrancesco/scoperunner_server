@@ -26,13 +26,15 @@ jobs:
               flags: unittests
               name: codecov-ddefrancesco
               exclude: |
-                **/mocks/**
-                **/tests/**
-                **/hipparcos/**
-                **/openngc/**
-                **/multibuild/**
-                **/models/**
-                **/usb/**
+                cache/**
+                errors/**
+                etxclient/**
+                mocks/**
+                hipparcos/**
+                openngc/**
+                multibuild/**
+                models/**
+                usb/**
 
             env:
               CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
