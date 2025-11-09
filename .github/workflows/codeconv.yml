@@ -20,7 +20,20 @@ jobs:
             run: go test -v ./... -race -coverprofile=coverage.out -covermode=atomic
     
           - name: Upload coverage reports to Codecov
-            uses: codecov/codecov-action@v3
+            uses: codecov/codecov-action@v5
+            with:
+              files: ./coverage.out
+              flags: unittests
+              name: codecov-ddefrancesco
+              exclude: |
+                **/mocks/**
+                **/tests/**
+                **/hipparcos/**
+                **/openngc/**
+                **/multibuild/**
+                **/models/**
+                **/usb/**
+
             env:
               CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
