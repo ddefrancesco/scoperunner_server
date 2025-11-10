@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	dms "github.com/ddefrancesco/go-dms/dms"
+	dms "github.com/ddefrancesco/go-dms/v2/dms"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 
 	req.Header.Add("content-type", "application/json")
 	//req.Header.Add("Authorization", "Bearer "+token)
-	req.Header.Add("Authorization", "Bearer 662401dfa874ef890f0df052")
+	req.Header.Add("Authorization", "Bearer 68e24742b455b3c8370ac1bf")
 	res, _ := http.DefaultClient.Do(req)
 
 	defer res.Body.Close()

@@ -15,12 +15,27 @@ jobs:
               fetch-depth: 2
           - uses: actions/setup-go@v5
             with:
-              go-version: '1.21'
+              go-version: '1.25'
           - name: Run coverage
             run: go test -v ./... -race -coverprofile=coverage.out -covermode=atomic
     
           - name: Upload coverage reports to Codecov
-            uses: codecov/codecov-action@v3
+            uses: codecov/codecov-action@v5
+            with:
+              files: ./coverage.out
+              flags: unittests
+              name: codecov-ddefrancesco
+              exclude: |
+                cache/**
+                errors/**
+                etxclient/**
+                mocks/**
+                hipparcos/**
+                openngc/**
+                multibuild/**
+                models/**
+                usb/**
+
             env:
               CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 

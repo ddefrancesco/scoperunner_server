@@ -8,8 +8,9 @@ import (
 	"net/http"
 	"strings"
 
-	dms "github.com/ddefrancesco/go-dms/dms"
-	cache "github.com/ddefrancesco/scoperunner_server/geocoding/cache"
+	dms "github.com/ddefrancesco/go-dms/v2/dms"
+
+	cache "github.com/ddefrancesco/scoperunner_server/cache"
 	"github.com/spf13/viper"
 )
 
@@ -36,8 +37,10 @@ func GetAutostarLocation(address Address, geoCache *cache.Cache[string, *Autosta
 		req.Header.Add("content-type", "application/json")
 		req.Header.Add("Authorization", "Bearer "+token)
 
-		res, _ := http.DefaultClient.Do(req)
-
+		res, err := http.DefaultClient.Do(req)
+		if err != nil {
+			return nil, err
+		}
 		defer res.Body.Close()
 		body, _ := io.ReadAll(res.Body)
 

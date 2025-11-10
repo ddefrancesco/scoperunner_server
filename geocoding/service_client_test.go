@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
+	cache "github.com/ddefrancesco/scoperunner_server/cache"
 	configuration "github.com/ddefrancesco/scoperunner_server/configurations"
-	cache "github.com/ddefrancesco/scoperunner_server/geocoding/cache"
 )
 
 func TestGetAutostarLocation(t *testing.T) {

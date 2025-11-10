@@ -1,17 +1,23 @@
 environments:
   fakescope: true
-serialport: "/dev/cu.usbserial-0001"
+serialport: 
+  name: "/dev/cu.usbserial-0001"
+  timeout: 200
 timezone: "Europe/Rome"
+utc-offset: "-01.0"
 geocoding:
   url: "https://geocoding.openapi.it/geocode"
   api_key: 
-    production: "nlwvf0vea4kdspgwquqneenegpdqeutm"
+    production: "hujgovjqrb5capyn4ihrfvupplbmxj08"
     sandbox:
-  token: "662401dfa874ef890f0df052"
+  token: "690f8641b46ac4031800a577"
 openngc:
   csv:
-    path: "../openngc/csv/NGC.csv"
+    path: "./openngc/csv/NGC.csv"
 opendatasoft:
   url: "https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets"
   messier-dataset: "ngc-ic-messier-catalog@datastro"
   hyg-dataset: "hyg-stellar-database@datastro"
+hipparcos:
+  csv:
+    path: "./hipparcos/hipparcos2.csv"

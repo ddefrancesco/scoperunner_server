@@ -11,8 +11,8 @@ import (
 
 	"github.com/ddefrancesco/scoperunner_server/configurations"
 	handler "github.com/ddefrancesco/scoperunner_server/handlers/commons"
+	mocks "github.com/ddefrancesco/scoperunner_server/mocks"
 	commons "github.com/ddefrancesco/scoperunner_server/models/commons"
-	scopeparser "github.com/ddefrancesco/scoperunner_server/scopeparser"
 )
 
 func TestInitCommandHandler(t *testing.T) {
@@ -39,9 +39,13 @@ func TestInitCommandHandler(t *testing.T) {
 			Address: addressJsonMap["address"],
 		}
 		log.Printf("InitCommandHandler::Address::Info -> %v ###", addressJson)
+		mockInitRequest := &mocks.InitRequestMock{
+			MockGetInitializeCommand: func() (string, error) {
+				return ":SC20251108:SL1200:St12.3456:Sg41.8902", nil
+			},
+		}
 
-		initRequest := scopeparser.NewInitRequest(addressJson)
-		initCmd, err := initRequest.SetInitializeCommand()
+		initCmd, err := mockInitRequest.GetInitializeCommand()
 		// ac, err := initRequest.ParseMap()
 		if err != nil {
 			appErr := &commons.ScopeErr{

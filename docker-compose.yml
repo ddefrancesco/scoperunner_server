@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  scoperunner_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: scoperunner_server:latest
+    container_name: scoperunner_server
+    ports:
+      - "8000:8000"
+      - "9999:9999"
+    environment:
+      - GO_ENV=production
+      - SCOPE_SERIALPORT=/dev/ttyUSB0
+      - SCOPE_ENVIRONMENTS_FAKESCOPE=false
+      - SCOPE_OPENNGC_CSV_PATH=/opt/scope/NGC.csv
+    volumes:
+      - ./scope:/opt/scope
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9999/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  default:
+    name: scoperunner_network

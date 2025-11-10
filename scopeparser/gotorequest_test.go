@@ -42,16 +42,16 @@ func TestGotoRequest_CheckGotoRADecCommand(t *testing.T) {
 		t.Errorf("CheckGotoRADecCommand() = %v, want %v", cmd, expected)
 	}
 }
-func TestGotoRequest_SetGotoRADecCommand(t *testing.T) {
+func TestGotoRequest_FindDeepSpaceObjectCommand(t *testing.T) {
 	configurations.InitTestConfig()
 	request := &GotoRequest{
 		Goto: map[string]string{"goto": "NGC0224"},
 	}
-	cmd, err := request.SetGotoRADecCommand()
+	cmd, err := request.FindDeepSpaceObjectCommand()
 	if err != nil {
-		t.Errorf("SetGotoRADecCommand() error = %v, wantErr %v", err, nil)
+		t.Errorf("FindDeepSpaceObjectCommand() error = %v, wantErr %v", err, nil)
 	}
 	if !strings.HasPrefix(cmd, ":Sr") || !strings.Contains(cmd, "#:Sd") {
-		t.Errorf("SetGotoRADecCommand() = %v, want command with :Sr and :Sd", cmd)
+		t.Errorf("FindDeepSpaceObjectCommand() = %v, want command with :Sr and :Sd", cmd)
 	}
 }

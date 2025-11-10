@@ -60,15 +60,17 @@ func gotoCmdDictionary() map[string]string {
 	return m
 }
 
-func (s *GotoRequest) SetGotoRADecCommand() (string, error) {
+func (s *GotoRequest) FindDeepSpaceObjectCommand() (string, error) {
 	gotoReq := s.Goto
 
 	openngc_catalog := cache.NewNGCCatalog()
 	openngc_record, err := openngc_catalog.FindNGCObject(gotoReq["goto"])
-	//openngc_record, err := openngc_catalog.FindNGCObject("M31")
 	if err != nil {
+
 		return "", err
 	}
+	//openngc_record, err := openngc_catalog.FindNGCObject("M31")
+
 	dec := openngc_record.Dec[:9]
 	dec = strings.Replace(dec, ":", "*", 1)
 

@@ -3,9 +3,10 @@ package scopeparser
 import (
 	"time"
 
+	"github.com/ddefrancesco/scoperunner_server/cache"
 	"github.com/ddefrancesco/scoperunner_server/geocoding"
-	"github.com/ddefrancesco/scoperunner_server/geocoding/cache"
 	"github.com/ddefrancesco/scoperunner_server/models/commons"
+	"github.com/spf13/viper"
 )
 
 var geoCache = cache.New[string, *geocoding.AutostarLatLong]()
@@ -59,24 +60,24 @@ func (s *InitializeRequest) initializationDictionary() map[string]string {
 
 	m := make(map[string]string)
 	m["toggle_precision"] = ":U#"
-	m["current_date"] = s.SetDateCommand()
+	m["current_date"] = s.GetDateCommand()
 	m["utc_offset"] = "SG"
 	m["dst"] = "SH"
-	m["local_time"] = s.SetTimeCommand()
+	m["local_time"] = s.GetTimeCommand()
 	m["local_sidereal_time"] = "SS"
 	m["current_site_lat"] = "St"
 	m["current_site_long"] = "Sg"
 	return m
 }
 
-func (s *InitializeRequest) SetDateCommand() string {
+func (s *InitializeRequest) GetDateCommand() string {
 	layout := "01/02/06#"
 	date := time.Now().Format(layout)
 	cmd := ":SC" + date
 	return cmd
 }
 
-func (s *InitializeRequest) SetTimeCommand() string {
+func (s *InitializeRequest) GetTimeCommand() string {
 	layout := "15:04:05#"
 	timeZone := "Europe/Rome"
 	loc, _ := time.LoadLocation(timeZone)
@@ -105,21 +106,27 @@ func (s *InitializeRequest) SetLongitudeCommand(address geocoding.Address) (stri
 	return cmd, nil
 }
 
-// func (s *InitializeRequest) SetUTCCommand() string {
-// 	layout := "s03:04:05#"
-// 	initTime := time.Now().Format(layout)
-// 	cmd := "SG" + initTime
-// 	return cmd
-// }
+func (s *InitializeRequest) GetUTCCommand() string {
+
+	initUTC := viper.GetString("utc-offset")
+	cmd := ":SG" + initUTC + "#"
+	return cmd
+}
 
 func (s *InitializeRequest) TogglePrecisionCommand() string {
 	return s.initializationDictionary()["toggle_precision"]
 }
 
-func (s *InitializeRequest) SetInitializeCommand() (string, error) {
+func (s *InitializeRequest) GetInitializeCommand() (string, error) {
 	addrRequest := s.Request
 	address := geocoding.Address{Location: addrRequest.Address}
 	lat, _ := s.SetLatitudeCommand(address)
 	long, _ := s.SetLongitudeCommand(address)
-	return s.TogglePrecisionCommand() + s.SetDateCommand() + s.SetTimeCommand() + lat + long, nil
+
+	return s.TogglePrecisionCommand() + s.GetDateCommand() + s.GetTimeCommand() + lat + long + s.GetUTCCommand(), nil
+}
+
+func (s *InitializeRequest) GetCurrentDateCommand() string {
+	return s.initializationDictionary()["current_date"]
+
 }
