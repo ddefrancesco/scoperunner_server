@@ -1,6 +1,6 @@
 .DS_Store
 .env
-coverage.out
+*coverage.out
 build/
 .vscode/
 *.numbers
